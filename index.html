@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youssef Elsayed Abdelaziz - Cybersecurity Engineer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Mouse Follower -->
+    <div id="mouseFollower" class="mouse-follower"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background"></div>
+        <div class="grid-background"></div>
+
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-title-container">
+                        <h1 class="hero-title">Youssef Elsayed Abdelaziz</h1>
+                    </div>
+                    <div class="hero-subtitle">
+                        <span id="typedText" class="typed-text"></span>
+                        <span id="cursor" class="cursor">|</span>
+                    </div>
+                    <div class="hero-description">
+                        <p id="heroBio">
+                            Hey! I'm Youssef Elsayed — a Cybersecurity Specialist, Full-Stack Developer, and Graphic
+                            Designer
+                            focused on building secure, scalable, and visually impactful digital solutions. I integrate
+                            offensive
+                            security expertise, robust software engineering, and creative design to deliver
+                            high-performance
+                            systems that are both protected and polished.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="openEmail()">
+                        <i data-lucide="mail"></i>
+                        Contact Me
+                    </button>
+                    <a href="public/CV/Youssef-Abdelaziz-1.pdf" target="_blank" class="btn btn-outline"
+                        style="text-decoration: none;">
+                        <i data-lucide="eye"></i>
+                        View CV
+                    </a>
+                </div>
+
+                <div class="hero-contact">
+                    <div class="contact-item">
+                        <i data-lucide="mail"></i>
+                        Youssefelsayed5520055@gmail.com
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="phone"></i>
+                        +20 1208682811
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="map-pin"></i>
+                        Obour City, Qalubia
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="linkedin"></i>
+                        <a href="https://www.linkedin.com/in/youssef-elsayed-543695344/" target="_blank">LinkedIn
+                            Profile</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-photo">
+                <div class="photo-card-holder">
+                    <div class="card-base card-base-1"></div>
+                    <div class="card-base card-base-2"></div>
+
+                    <div class="photo-card">
+                        <div class="card-header">
+                            <div class="status-badge">
+                                <div class="status-dot"></div>
+                                <span>SECURITY CERTIFIED</span>
+                            </div>
+                        </div>
+
+                        <div class="photo-container">
+                            <div class="photo-frame-outer"></div>
+                            <div class="photo-frame-inner"></div>
+                            <div class="photo-wrapper">
+                                <img id="profilePhoto" src="public/profile.jpg" alt="Youssef Elsayed Abdelaziz"
+                                    class="profile-photo">
+                                <div class="photo-overlay-1"></div>
+                                <div class="photo-overlay-2"></div>
+                                <div class="scan-line-container">
+                                    <div class="scan-line"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-info">
+                            <div class="name-plate">
+                                <h3 class="card-name">Youssef Elsayed Abdelaziz</h3>
+                                <p class="card-title">Cybersecurity Engineer</p>
+                            </div>
+
+                            <div class="status-indicators">
+                                <div class="status-indicator status-verified">
+                                    <i data-lucide="shield-check"></i>
+                                    <span>VERIFIED</span>
+                                </div>
+                                <div class="status-indicator status-student">
+                                    <i data-lucide="graduation-cap"></i>
+                                    <span>STUDENT</span>
+                                </div>
+                            </div>
+
+                            <div class="security-level">
+                                <div class="security-header">
+                                    <span>Security Clearance</span>
+                                    <span class="level-text">Level 5</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="holographic-effect"></div>
+                    </div>
+
+                    <div class="floating-element floating-1"></div>
+                    <div class="floating-element floating-2"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <i data-lucide="chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="main-content">
+        <div class="container">
+            <!-- Tab Navigation -->
+            <div class="tabs">
+                <div class="tab-list">
+                    <button class="tab-trigger active" data-tab="about">About</button>
+                    <button class="tab-trigger" data-tab="skills">Skills</button>
+                    <button class="tab-trigger" data-tab="projects">Projects</button>
+                    <button class="tab-trigger" data-tab="certifications">Certifications</button>
+                </div>
+
+                <!-- About Tab -->
+                <div class="tab-content active" id="about">
+                    <div class="about-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i data-lucide="graduation-cap"></i>
+                                    Education
+                                </h3>
+                            </div>
+                            <div class="card-content">
+                                <div class="education-item">
+                                    <h4>Bachelor of Science in Computer Science</h4>
+                                    <p class="institution">Misr International University</p>
+                                    <p class="date">January 2023 - February 2027</p>
+                                    <p class="level">Current Level: Freshman 1</p>
+                                    <p class="focus">Focus: Programming, Networking, and Cybersecurity</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Languages & Proficiency</h3>
+                            </div>
+                            <div class="card-content">
+                                <div class="language-item">
+                                    <span>English</span>
+                                    <span class="badge badge-blue">B2 Level</span>
+                                </div>
+                                <div class="language-item">
+                                    <span>Arabic</span>
+                                    <span class="badge badge-green">Native</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Professional Summary</h3>
+                        </div>
+                        <div class="card-content">
+                            <p id="aboutBio">
+                                Hey! I'm Youssef Elsayed — a Cybersecurity Specialist, Full-Stack Developer, and Graphic
+                                Designer
+                                focused on building secure, scalable, and visually impactful digital solutions. I
+                                integrate offensive
+                                security expertise, robust software engineering, and creative design to deliver
+                                high-performance
+                                systems that are both protected and polished.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills Tab -->
+                <div class="tab-content" id="skills">
+                    <div class="skills-filter">
+                        <button class="filter-btn active" data-category="all">All Skills</button>
+                        <button class="filter-btn" data-category="cybersecurity">
+                            <i data-lucide="shield"></i>
+                            Cybersecurity
+                        </button>
+                        <button class="filter-btn" data-category="network">
+                            <i data-lucide="network"></i>
+                            Network Security
+                        </button>
+                        <button class="filter-btn" data-category="cloud">
+                            <i data-lucide="cloud"></i>
+                            Cloud & Container
+                        </button>
+                        <button class="filter-btn" data-category="programming">
+                            <i data-lucide="code"></i>
+                            Programming
+                        </button>
+                    </div>
+
+                    <div class="skills-grid" id="skillsGrid">
+                        <!-- Skills will be populated by JavaScript -->
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i data-lucide="monitor"></i>
+                                Skills Analytics
+                            </h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="analytics-grid">
+                                <div class="analytics-item">
+                                    <div class="analytics-number" id="statTotalSkills">0</div>
+                                    <div class="analytics-label">Total Skills</div>
+                                </div>
+                                <div class="analytics-item">
+                                    <div class="analytics-number" id="statExpertSkills">0</div>
+                                    <div class="analytics-label">Expert Level</div>
+                                </div>
+                                <div class="analytics-item">
+                                    <div class="analytics-number" id="statAvgProficiency">0%</div>
+                                    <div class="analytics-label">Avg. Proficiency</div>
+                                </div>
+                                <div class="analytics-item">
+                                    <div class="analytics-number" id="statCategories">0</div>
+                                    <div class="analytics-label">Categories</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projects Tab -->
+                <div class="tab-content" id="projects">
+                    <div class="projects-grid" id="projectsGrid">
+                        <!-- Projects will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Certifications Tab -->
+                <div class="tab-content" id="certifications">
+                    <div class="certifications-header">
+                        <h2>Professional Certifications</h2>
+                        <p id="certCountSubtitle">0 verified certifications from industry-leading organizations</p>
+                    </div>
+
+                    <div class="certifications-grid">
+                        <!-- Certifications will be populated by JavaScript -->
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i data-lucide="award"></i>
+                                Certification Summary
+                            </h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="analytics-grid">
+                                <div class="analytics-item">
+                                    <div class="analytics-number" id="statTotalCerts">0</div>
+                                    <div class="analytics-label">Total Certificates</div>
+                                </div>
+                                <div class="analytics-item">
+                                    <div class="analytics-number" id="statCyberCerts">0</div>
+                                    <div class="analytics-label">Cybersecurity</div>
+                                </div>
+                                <div class="analytics-item">
+                                    <div class="analytics-number" id="statLatestYear">—</div>
+                                    <div class="analytics-label">Latest Year</div>
+                                </div>
+                                <div class="analytics-item">
+                                    <div class="analytics-number" id="statProviders">0</div>
+                                    <div class="analytics-label">Providers</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Youssef Elsayed Abdelaziz. Securing the digital future, one system at a time.</p>
+            <p style="margin-top:0.5rem;font-size:0.75rem;opacity:0.4;">
+                <a href="admin.html" style="color:inherit;text-decoration:none;" title="Admin Panel">⚙</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Modal for Certificate View -->
+    <div id="certificateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"></h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="certificate-preview">
+                    <i data-lucide="file-text"></i>
+                    <h4>Certificate Preview</h4>
+                    <p id="modalDescription"></p>
+                    <div id="modalDetails"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
+    <script src="firebase-init.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="script.js?v=3"></script>
+</body>
+
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Control Panel — Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-bg">
+            <div class="login-grid"></div>
+            <div class="login-glow"></div>
+        </div>
+        <div class="login-card">
+            <div class="login-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+            </div>
+            <h1>Admin Portal</h1>
+            <p>Portfolio Control Center</p>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="loginUser" placeholder="youssef" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPass" placeholder="••••••••">
+                </div>
+                <div id="loginError" class="login-error"></div>
+                <button type="submit" class="btn-login">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                        <polyline points="10 17 15 12 10 7" />
+                        <line x1="15" y1="12" x2="3" y2="12" />
+                    </svg>
+                    Access Dashboard
+                </button>
+            </form>
+            <p class="login-hint">Portfolio Admin Access</p>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard hidden">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                </div>
+                <div class="sidebar-title">
+                    <span class="sidebar-name">Portfolio Admin</span>
+                    <span class="sidebar-role">Control Panel</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-section="dashboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    Dashboard
+                </button>
+                <button class="nav-item" data-section="skills">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    Skills
+                    <span class="nav-badge" id="skillsCount">0</span>
+                </button>
+                <button class="nav-item" data-section="certifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="8" r="6" />
+                        <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+                    </svg>
+                    Certifications
+                    <span class="nav-badge" id="certsCount">0</span>
+                </button>
+                <button class="nav-item" data-section="projects">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 18 22 12 16 6" />
+                        <polyline points="8 6 2 12 8 18" />
+                    </svg>
+                    Projects
+                    <span class="nav-badge" id="projectsCount">0</span>
+                </button>
+                <button class="nav-item" data-section="settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M19.07 4.93a10 10 0 0 0-14.14 0M4.93 19.07a10 10 0 0 0 14.14 0" />
+                    </svg>
+                    Settings
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="index.html" target="_blank" class="view-portfolio-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                    View Portfolio
+                </a>
+                <button class="logout-btn" onclick="logout()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                    Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" onclick="toggleSidebar()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                    <div class="breadcrumb">
+                        <span id="currentSection">Dashboard</span>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="sync-status" id="syncStatus">
+                        <div class="sync-dot"></div>
+                        <span>Auto-saved</span>
+                    </div>
+                    <div class="topbar-user">
+                        <div class="user-avatar">A</div>
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Toast Notification -->
+            <div id="toast" class="toast"></div>
+
+            <!-- Dashboard Section -->
+            <section class="content-section active" id="section-dashboard">
+                <div class="section-header">
+                    <h2>Overview</h2>
+                    <p>Portfolio content at a glance</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-skills">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="statSkills">0</div>
+                            <div class="stat-label">Total Skills</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon stat-certs">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="8" r="6" />
+                                <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="statCerts">0</div>
+                            <div class="stat-label">Certifications</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon stat-projects">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6" />
+                                <polyline points="8 6 2 12 8 18" />
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="statProjects">0</div>
+                            <div class="stat-label">Projects</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon stat-avg">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="20" x2="18" y2="10" />
+                                <line x1="12" y1="20" x2="12" y2="4" />
+                                <line x1="6" y1="20" x2="6" y2="14" />
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="statAvg">0%</div>
+                            <div class="stat-label">Avg. Skill Level</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                            Recent Skills
+                        </h3>
+                        <div id="recentSkills" class="recent-list"></div>
+                        <button class="quick-add-btn" onclick="switchSection('skills')">Manage Skills →</button>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="8" r="6" />
+                                <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+                            </svg>
+                            Recent Certifications
+                        </h3>
+                        <div id="recentCerts" class="recent-list"></div>
+                        <button class="quick-add-btn" onclick="switchSection('certifications')">Manage Certs →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section class="content-section" id="section-skills">
+                <div class="section-header">
+                    <div>
+                        <h2>Skills Management</h2>
+                        <p>Add, edit or remove skills from your portfolio</p>
+                    </div>
+                    <button class="btn-primary" onclick="openModal('skill')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Add Skill
+                    </button>
+                </div>
+
+                <div class="filter-bar">
+                    <button class="filter-chip active" data-filter="all"
+                        onclick="filterSkills('all', this)">All</button>
+                    <button class="filter-chip" data-filter="cybersecurity"
+                        onclick="filterSkills('cybersecurity', this)">Cybersecurity</button>
+                    <button class="filter-chip" data-filter="network"
+                        onclick="filterSkills('network', this)">Network</button>
+                    <button class="filter-chip" data-filter="cloud" onclick="filterSkills('cloud', this)">Cloud</button>
+                    <button class="filter-chip" data-filter="programming"
+                        onclick="filterSkills('programming', this)">Programming</button>
+                </div>
+
+                <div class="items-grid" id="skillsList"></div>
+            </section>
+
+            <!-- Certifications Section -->
+            <section class="content-section" id="section-certifications">
+                <div class="section-header">
+                    <div>
+                        <h2>Certifications Management</h2>
+                        <p>Manage your professional certifications</p>
+                    </div>
+                    <button class="btn-primary" onclick="openModal('cert')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Add Certification
+                    </button>
+                </div>
+                <div class="items-grid" id="certsList"></div>
+            </section>
+
+            <!-- Projects Section -->
+            <section class="content-section" id="section-projects">
+                <div class="section-header">
+                    <div>
+                        <h2>Projects Management</h2>
+                        <p>Showcase and manage your projects</p>
+                    </div>
+                    <button class="btn-primary" onclick="openModal('project')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Add Project
+                    </button>
+                </div>
+                <div class="items-grid" id="projectsList"></div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="content-section" id="section-settings">
+                <div class="section-header">
+                    <h2>Settings</h2>
+                    <p>Configure admin access and portfolio data</p>
+                </div>
+
+                <div class="settings-grid">
+
+                    <!-- Profile Image -->
+                    <div class="settings-card">
+                        <h3>Profile Photo</h3>
+                        <div class="image-upload-wrapper" id="imageUploadWrapper"
+                            onclick="document.getElementById('profileImageInput').click()">
+                            <img id="adminProfilePreview" src="public/profile.jpg" alt="Profile Preview">
+                            <div class="image-upload-overlay">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="17 8 12 3 7 8" />
+                                    <line x1="12" y1="3" x2="12" y2="15" />
+                                </svg>
+                                <span>Click to upload new photo</span>
+                            </div>
+                        </div>
+                        <input type="file" id="profileImageInput" accept="image/*" style="display:none"
+                            onchange="handleImageUpload(event)">
+                        <button class="btn-danger" style="margin-top:0.75rem;width:100%;justify-content:center;"
+                            onclick="resetProfileImage()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="1 4 1 10 7 10" />
+                                <path d="M3.51 15a9 9 0 1 0 .49-3.21" />
+                            </svg>
+                            Reset to Original Photo
+                        </button>
+                    </div>
+
+                    <!-- Bio Editor -->
+                    <div class="settings-card">
+                        <h3>Bio &amp; Description</h3>
+                        <p style="color:#94a3b8;font-size:0.85rem;margin-bottom:1rem;">This text appears in the hero
+                            section and the About tab of your portfolio.</p>
+                        <div class="input-group">
+                            <label>Your Bio</label>
+                            <textarea id="bioEditor" rows="7" placeholder="Write your bio here..."
+                                style="resize:vertical;min-height:160px;">Hey! I'm Youssef Elsayed — a Cybersecurity Specialist, Full-Stack Developer, and Graphic Designer focused on building secure, scalable, and visually impactful digital solutions. I integrate offensive security expertise, robust software engineering, and creative design to deliver high-performance systems that are both protected and polished.</textarea>
+                        </div>
+                        <div style="display:flex;gap:0.75rem;">
+                            <button class="btn-primary" style="flex:1;justify-content:center;" onclick="saveBio()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                                    <polyline points="17 21 17 13 7 13 7 21" />
+                                    <polyline points="7 3 7 8 15 8" />
+                                </svg>
+                                Save Bio
+                            </button>
+                            <button class="btn-secondary" onclick="resetBio()">Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Change Password</h3>
+                        <div class="input-group">
+                            <label>Current Password</label>
+                            <input type="password" id="currentPass" placeholder="••••••••">
+                        </div>
+                        <div class="input-group">
+                            <label>New Password</label>
+                            <input type="password" id="newPass" placeholder="••••••••">
+                        </div>
+                        <div class="input-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" id="confirmPass" placeholder="••••••••">
+                        </div>
+                        <button class="btn-primary" onclick="changePassword()">Update Password</button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Data Management</h3>
+                        <p style="color:#94a3b8;margin-bottom:1rem;font-size:0.9rem;">Export or reset your portfolio
+                            data. All data is stored in localStorage and synced to the portfolio automatically.</p>
+                        <div class="settings-actions">
+                            <button class="btn-secondary" onclick="exportData()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                </svg>
+                                Export Data
+                            </button>
+                            <button class="btn-danger" onclick="resetToDefaults()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="1 4 1 10 7 10" />
+                                    <path d="M3.51 15a9 9 0 1 0 .49-3.21" />
+                                </svg>
+                                Reset to Defaults
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Universal Modal -->
+    <div id="modalOverlay" class="modal-overlay hidden" onclick="closeModal()">
+        <div class="admin-modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Item</h3>
+                <button class="modal-close-btn" onclick="closeModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn-primary" id="modalSave" onclick="saveModalItem()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirm Modal -->
+    <div id="deleteOverlay" class="modal-overlay hidden" onclick="closeDeleteModal()">
+        <div class="delete-modal" onclick="event.stopPropagation()">
+            <div class="delete-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                    <path d="M10 11v6" />
+                    <path d="M14 11v6" />
+                    <path d="M9 6V4h6v2" />
+                </svg>
+            </div>
+            <h3>Delete Item?</h3>
+            <p>This action cannot be undone and will immediately update your portfolio.</p>
+            <div class="delete-actions">
+                <button class="btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                <button class="btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
+    <script src="firebase-init.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>
