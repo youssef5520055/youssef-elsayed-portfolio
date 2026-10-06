@@ -1,17 +1,20 @@
-"use client"
-
+import dynamic from "next/dynamic"
 import Navbar from "@/components/portfolio/Navbar"
 import HeroSection from "@/components/portfolio/HeroSection"
-import AboutSection from "@/components/portfolio/AboutSection"
-import SkillsSection from "@/components/portfolio/SkillsSection"
-import ProjectsSection from "@/components/portfolio/ProjectsSection"
-import CertificationsSection from "@/components/portfolio/CertificationsSection"
-import FooterSection from "@/components/portfolio/FooterSection"
+import ClientSetup from "@/components/portfolio/ClientSetup"
 import Starfield from "@/components/ui/Starfield"
+
+// Dynamically import below-the-fold sections to heavily reduce initial JS bundle and hydration delay
+const AboutSection = dynamic(() => import("@/components/portfolio/AboutSection"))
+const SkillsSection = dynamic(() => import("@/components/portfolio/SkillsSection"))
+const ProjectsSection = dynamic(() => import("@/components/portfolio/ProjectsSection"))
+const CertificationsSection = dynamic(() => import("@/components/portfolio/CertificationsSection"))
+const FooterSection = dynamic(() => import("@/components/portfolio/FooterSection"))
 
 export default function YoussefPortfolio() {
   return (
     <main className="relative text-[var(--text-primary)]">
+      <ClientSetup />
       <Starfield />
       <Navbar />
       <HeroSection />

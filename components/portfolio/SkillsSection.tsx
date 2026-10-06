@@ -106,10 +106,12 @@ export default function SkillsSection() {
             }}
           >
             <div className="w-full h-[120%] scale-110 pointer-events-auto">
-              <SplineScene 
-                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                className="w-full h-full"
-              />
+              {inView && (
+                <SplineScene 
+                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                  className="w-full h-full"
+                />
+              )}
             </div>
           </motion.div>
         </div>
