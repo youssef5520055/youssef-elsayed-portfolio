@@ -37,10 +37,10 @@ export default function FooterSection() {
   ]
 
   const SOCIAL_LINKS = [
-    { label: "Email", href: "mailto:Youssefelsayed5520055@gmail.com", icon: Mail },
+    { label: "Email", href: "mailto:Youssefelsayed5520055@gmail.com?subject=Professional%20Inquiry%3A%20Software%20Engineering%20%26%20Security&body=Hello%20Youssef%2C%0D%0A%0D%0AI%20recently%20reviewed%20your%20portfolio%20and%20was%20highly%20impressed%20by%20your%20expertise%20in%20software%20architecture%2C%20cybersecurity%2C%20and%20AI.%0D%0A%0D%0AI%20am%20reaching%20out%20to%20discuss%20a%20potential%20opportunity%20and%20would%20love%20to%20connect.%0D%0A%0D%0ABest%20regards%2C%0D%0A%5BYour%20Name%5D", icon: Mail },
     { label: "LinkedIn", href: "https://linkedin.com/in/youssef-elsayed-543695344", icon: Linkedin },
     { label: "GitHub", href: "https://github.com/youssef5520055", icon: Github },
-    { label: "WhatsApp", href: "https://wa.me/201208682811", icon: MessageCircle },
+    { label: "WhatsApp", href: "https://wa.me/201208682811?text=Hello%20Youssef%2C%20I%20recently%20viewed%20your%20portfolio%20and%20I%20am%20interested%20in%20discussing%20a%20potential%20collaboration%20or%20opportunity.", icon: MessageCircle },
     { label: "Resume", href: "/CV/Youssef_Elsayed_Abdelaziz.pdf", icon: FileText },
   ]
 
@@ -89,7 +89,7 @@ export default function FooterSection() {
                     className="absolute top-full left-0 mt-6 flex flex-col sm:flex-row gap-3 p-3 rounded-2xl bg-[#050505]/90 backdrop-blur-xl border border-[var(--border-strong)] shadow-2xl z-50 min-w-max"
                   >
                     <a 
-                      href="https://wa.me/201208682811" 
+                      href="https://wa.me/201208682811?text=Hello%20Youssef%2C%20I%20recently%20viewed%20your%20portfolio%20and%20I%20am%20interested%20in%20discussing%20a%20potential%20collaboration%20or%20opportunity." 
                       target="_blank" 
                       rel="noreferrer" 
                       className="flex items-center gap-3 px-5 py-3 rounded-xl hover:bg-[var(--accent-cyan)]/10 hover:text-white transition-colors border border-transparent hover:border-[var(--accent-cyan)]/30 text-[var(--text-secondary)] group/item"
@@ -98,7 +98,7 @@ export default function FooterSection() {
                       <span className="font-mono text-xs tracking-widest uppercase mt-0.5">WhatsApp</span>
                     </a>
                     <a 
-                      href="mailto:Youssefelsayed5520055@gmail.com" 
+                      href="mailto:Youssefelsayed5520055@gmail.com?subject=Professional%20Inquiry%3A%20Software%20Engineering%20%26%20Security&body=Hello%20Youssef%2C%0D%0A%0D%0AI%20recently%20reviewed%20your%20portfolio%20and%20was%20highly%20impressed%20by%20your%20expertise%20in%20software%20architecture%2C%20cybersecurity%2C%20and%20AI.%0D%0A%0D%0AI%20am%20reaching%20out%20to%20discuss%20a%20potential%20opportunity%20and%20would%20love%20to%20connect.%0D%0A%0D%0ABest%20regards%2C%0D%0A%5BYour%20Name%5D" 
                       className="flex items-center gap-3 px-5 py-3 rounded-xl hover:bg-[var(--accent-cyan)]/10 hover:text-white transition-colors border border-transparent hover:border-[var(--accent-cyan)]/30 text-[var(--text-secondary)] group/item"
                     >
                       <Mail className="w-5 h-5 group-hover/item:text-[var(--accent-cyan)] transition-colors" />

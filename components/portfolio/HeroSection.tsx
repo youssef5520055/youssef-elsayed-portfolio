@@ -39,7 +39,7 @@ export default function HeroSection() {
   }
 
   const CONTACT_CARDS = [
-    { icon: Mail, label: "EMAIL", href: "mailto:Youssefelsayed5520055@gmail.com" },
+    { icon: Mail, label: "EMAIL", href: "mailto:Youssefelsayed5520055@gmail.com?subject=Professional%20Inquiry%3A%20Software%20Engineering%20%26%20Security&body=Hello%20Youssef%2C%0D%0A%0D%0AI%20recently%20reviewed%20your%20portfolio%20and%20was%20highly%20impressed%20by%20your%20expertise%20in%20software%20architecture%2C%20cybersecurity%2C%20and%20AI.%0D%0A%0D%0AI%20am%20reaching%20out%20to%20discuss%20a%20potential%20opportunity%20and%20would%20love%20to%20connect.%0D%0A%0D%0ABest%20regards%2C%0D%0A%5BYour%20Name%5D" },
     { icon: Linkedin, label: "LINKEDIN", href: "https://linkedin.com/in/youssef-elsayed-543695344" },
     { icon: Github, label: "GITHUB", href: "https://github.com/youssef5520055" },
     { icon: FileText, label: "RESUME", href: "/CV/Youssef_Elsayed_Abdelaziz.pdf" }
@@ -123,7 +123,7 @@ export default function HeroSection() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
             <a 
-              href="mailto:Youssefelsayed5520055@gmail.com"
+              href="mailto:Youssefelsayed5520055@gmail.com?subject=Professional%20Inquiry%3A%20Software%20Engineering%20%26%20Security&body=Hello%20Youssef%2C%0D%0A%0D%0AI%20recently%20reviewed%20your%20portfolio%20and%20was%20highly%20impressed%20by%20your%20expertise%20in%20software%20architecture%2C%20cybersecurity%2C%20and%20AI.%0D%0A%0D%0AI%20am%20reaching%20out%20to%20discuss%20a%20potential%20opportunity%20and%20would%20love%20to%20connect.%0D%0A%0D%0ABest%20regards%2C%0D%0A%5BYour%20Name%5D"
               className="group relative px-6 py-3 border border-transparent hover:border-[var(--border-subtle)] bg-transparent hover:bg-black/20 backdrop-blur-sm transition-all flex items-center justify-center gap-3 text-[10px] md:text-xs font-mono tracking-widest text-[var(--text-secondary)] hover:text-white uppercase rounded-xl w-full sm:w-auto"
             >
               Contact Me
