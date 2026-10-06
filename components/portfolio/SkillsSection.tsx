@@ -48,8 +48,8 @@ export default function SkillsSection() {
   const inView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section id="skills" ref={ref} className="py-32 border-b border-[var(--border-subtle)] bg-transparent">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <section id="skills" ref={ref} className="relative py-32 border-b border-[var(--border-subtle)] bg-transparent overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -62,9 +62,9 @@ export default function SkillsSection() {
           <h3 className="text-4xl font-bold text-white tracking-tight">Core Competencies</h3>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 relative">
           {/* Left Content - Skills */}
-          <div className="w-full lg:w-[60%] grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="w-full lg:w-[60%] grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
             {skillCategories.map((cat, idx) => (
               <motion.div
                 key={idx}
@@ -96,15 +96,21 @@ export default function SkillsSection() {
 
           {/* Right Content - Spline 3D Scene */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.3, duration: 0.7 }}
-            className="w-full lg:w-[40%] h-[500px] lg:h-auto lg:min-h-[600px] relative flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.3, duration: 1 }}
+            className="w-full lg:w-[40%] h-[600px] lg:h-auto lg:absolute lg:right-0 lg:top-[-50px] lg:bottom-[-50px] flex items-center justify-center pointer-events-none z-0"
+            style={{
+              maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+            }}
           >
-            <SplineScene 
-              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="w-full h-full"
-            />
+            <div className="w-full h-[120%] scale-110 pointer-events-auto">
+              <SplineScene 
+                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                className="w-full h-full"
+              />
+            </div>
           </motion.div>
         </div>
       </div>
