@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Moon, Menu, X } from "lucide-react"
+import { Moon, Sun, Menu, X } from "lucide-react"
+import { toast } from "sonner"
 
 const NAV_LINKS = [
   { label: "HOME", href: "#" },
@@ -17,6 +18,7 @@ export default function Navbar() {
   const [active, setActive] = useState("HOME")
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isLight, setIsLight] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +27,18 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const handleThemeToggle = () => {
+    setIsLight(true)
+    toast.error("System Override Prevented", {
+      description: "Dark mode is strictly enforced for optimal security visibility.",
+      duration: 3000,
+    })
+    // Revert back to moon after a short delay
+    setTimeout(() => {
+      setIsLight(false)
+    }, 1500)
+  }
 
   return (
     <>
@@ -67,27 +81,60 @@ export default function Navbar() {
 
           {/* Right Controls */}
           <div className="flex items-center gap-6">
+            <button 
+              onClick={handleThemeToggle}
+              className="text-[var(--text-muted)] hover:text-[var(--accent-cyan)] transition-colors relative"
+              aria-label="Toggle Theme"
+            >
+              <AnimatePresence mode="wait">
+                {isLight ? (
+                  <motion.div
+                    key="sun"
+                    initial={{ scale: 0, rotate: -90 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    exit={{ scale: 0, rotate: 90 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Sun className="w-4 h-4 text-[var(--accent-cyan)]" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="moon"
+                    initial={{ scale: 0, rotate: 90 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    exit={{ scale: 0, rotate: -90 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Moon className="w-4 h-4" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
             <button className="text-[var(--text-muted)] hover:text-white transition-colors lg:hidden" onClick={() => setMobileMenuOpen(true)}>
               <Menu className="w-5 h-5" />
             </button>
-            <div className="hidden lg:flex flex-col gap-[4px] cursor-pointer group">
+            <button 
+              onClick={() => setMobileMenuOpen(true)}
+              className="hidden lg:flex flex-col gap-[4px] cursor-pointer group p-1"
+              aria-label="Open Menu"
+            >
               <div className="w-6 h-[1px] bg-[var(--text-muted)] group-hover:bg-white transition-colors" />
               <div className="w-4 h-[1px] bg-[var(--text-muted)] group-hover:bg-white transition-colors ml-auto" />
               <div className="w-5 h-[1px] bg-[var(--text-muted)] group-hover:bg-white transition-colors ml-auto" />
-            </div>
+            </button>
           </div>
 
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Fullscreen Overlay Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-[#050505]/95 backdrop-blur-xl flex flex-col items-center justify-center lg:hidden"
+            className="fixed inset-0 z-[60] bg-[#050505]/95 backdrop-blur-xl flex flex-col items-center justify-center"
           >
             <button 
               onClick={() => setMobileMenuOpen(false)}
