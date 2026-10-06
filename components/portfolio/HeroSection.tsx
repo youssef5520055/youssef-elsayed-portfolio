@@ -5,6 +5,68 @@ import { Mail, Linkedin, FileText, ArrowRight, Github } from "lucide-react"
 import { useEffect, useState } from "react"
 import EtchedAccretion from "@/components/ui/etched-accretion"
 
+const DecryptedText = ({ text }: { text: string }) => {
+  const [displayText, setDisplayText] = useState(text)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (mediaQuery.matches) {
+      setDisplayText(text)
+      return
+    }
+
+    const CHARS = "ABCDEF0123456789!@#$%^&*()_+{}[];'<>"
+    let iteration = 0
+    let interval: NodeJS.Timeout
+
+    setDisplayText(
+      text.split("").map(c => c === " " ? " " : CHARS[Math.floor(Math.random() * CHARS.length)]).join("")
+    )
+
+    const animate = () => {
+      interval = setInterval(() => {
+        setDisplayText((current) => 
+          text
+            .split("")
+            .map((char, index) => {
+              if (char === " ") return " "
+              if (index < iteration) {
+                return text[index]
+              }
+              return CHARS[Math.floor(Math.random() * CHARS.length)]
+            })
+            .join("")
+        )
+
+        if (iteration >= text.length) {
+          clearInterval(interval)
+        }
+        
+        iteration += 0.8
+      }, 30)
+    }
+
+    const timeout = setTimeout(animate, 50)
+
+    return () => {
+      clearInterval(interval)
+      clearTimeout(timeout)
+    }
+  }, [text])
+
+  if (text === "& Cybersecurity Specialist") {
+    const ampersand = displayText.charAt(0)
+    const rest = displayText.slice(1)
+    return (
+      <>
+        <span className="text-[var(--text-muted)]">{ampersand}</span>{rest}
+      </>
+    )
+  }
+
+  return <span>{displayText}</span>
+}
+
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false)
 
@@ -95,7 +157,7 @@ export default function HeroSection() {
             className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight text-white leading-[1.2] lg:leading-[1.15] drop-shadow-lg"
           >
             Software Engineer <br className="hidden sm:block" />
-            <span className="text-[var(--text-muted)]">&</span> Cybersecurity Specialist <br className="hidden sm:block" />
+              <DecryptedText text="& Cybersecurity Specialist" /> <br className="hidden sm:block" />
             Exploring <span className="text-[var(--accent-cyan)] drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]">AI</span> <span className="text-[var(--text-muted)]">&</span> Building <br className="hidden sm:block" />
             What's Next
           </motion.h1>
