@@ -3,8 +3,6 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { SplineScene } from "@/components/ui/splite"
-import { Card } from "@/components/ui/card"
-import { Spotlight } from "@/components/ui/spotlight"
 
 const skillCategories = [
   {
@@ -101,21 +99,12 @@ export default function SkillsSection() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.3, duration: 0.7 }}
-            className="w-full lg:w-[40%] h-[350px] lg:h-auto lg:min-h-[550px]"
+            className="w-full lg:w-[40%] h-[500px] lg:h-auto lg:min-h-[600px] relative flex items-center justify-center"
           >
-            <Card className="w-full h-full bg-[#0a0a0a]/50 backdrop-blur-sm border-[var(--border-subtle)] relative overflow-hidden rounded-2xl p-0 flex flex-col justify-center">
-              <Spotlight
-                className="-top-40 left-0 md:left-20 md:-top-20"
-                fill="var(--accent-cyan)"
-              />
-              <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-t from-[#050505] to-transparent opacity-50" />
-              <div className="relative w-full h-full z-10">
-                <SplineScene 
-                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                  className="w-full h-full"
-                />
-              </div>
-            </Card>
+            <SplineScene 
+              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              className="w-full h-full"
+            />
           </motion.div>
         </div>
       </div>
