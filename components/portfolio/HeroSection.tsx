@@ -15,8 +15,8 @@ const DecryptedText = ({ text }: { text: string }) => {
       return
     }
 
-    const CHARS = "ABCDEF0123456789!@#$%^&*()_+{}[];'<>"
-    let iteration = 0
+    const CHARS = "0123456789#@$%&*+=<>/\\|{}[]ABCDEF"
+    let iteration = -3
     let interval: NodeJS.Timeout
 
     setDisplayText(
@@ -42,11 +42,11 @@ const DecryptedText = ({ text }: { text: string }) => {
           clearInterval(interval)
         }
         
-        iteration += 0.8
-      }, 30)
+        iteration += 1
+      }, 90)
     }
 
-    const timeout = setTimeout(animate, 50)
+    const timeout = setTimeout(animate, 200)
 
     return () => {
       clearInterval(interval)
