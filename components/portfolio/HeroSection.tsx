@@ -51,10 +51,10 @@ export default function HeroSection() {
       params={accretionParams} 
       className=""
     >
-      <div className="relative w-full flex-1 max-w-[1600px] mx-auto px-6 lg:px-12 pt-32 pb-12 z-10 flex flex-col justify-between pointer-events-none">
+      <div className="relative w-full flex-1 max-w-[1600px] mx-auto px-6 lg:px-12 pt-32 pb-12 z-10 flex flex-col justify-between pointer-events-none min-h-full">
         
-        {/* Top-Right Contact Cards */}
-        <div className="absolute top-32 right-6 lg:right-12 flex gap-4 md:gap-6 z-20">
+        {/* Top-Right Contact Cards (Absolute on Desktop, Scrollable/Grid on Mobile) */}
+        <div className="lg:absolute lg:top-32 lg:right-12 flex lg:flex-row flex-wrap lg:flex-nowrap gap-3 md:gap-4 z-20 mt-8 lg:mt-0 justify-start w-full lg:w-auto">
           {CONTACT_CARDS.map((card, idx) => (
             <motion.a
               key={card.label}
@@ -63,10 +63,10 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 + (idx * 0.1), duration: 0.6, ease: "easeOut" }}
-              className="group relative flex flex-col items-center justify-center w-24 h-20 md:w-32 md:h-24 border border-[var(--border-subtle)] hover:border-[var(--accent-cyan)]/50 bg-black/40 backdrop-blur-md pointer-events-auto transition-all hover:bg-black/60 rounded-2xl overflow-hidden shadow-lg"
+              className="group relative flex flex-col items-center justify-center w-[calc(50%-6px)] sm:w-24 h-16 sm:h-20 md:w-32 md:h-24 border border-[var(--border-subtle)] hover:border-[var(--accent-cyan)]/50 bg-black/40 backdrop-blur-md pointer-events-auto transition-all hover:bg-black/60 rounded-2xl overflow-hidden shadow-lg"
             >
-              <card.icon className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--accent-cyan)] mb-2 transition-colors" strokeWidth={1.5} />
-              <span className="text-[9px] md:text-[10px] font-mono tracking-widest text-[var(--text-secondary)] group-hover:text-white uppercase transition-colors">
+              <card.icon className="w-4 h-4 md:w-5 md:h-5 text-[var(--text-secondary)] group-hover:text-[var(--accent-cyan)] mb-1 md:mb-2 transition-colors" strokeWidth={1.5} />
+              <span className="text-[8px] md:text-[10px] font-mono tracking-widest text-[var(--text-secondary)] group-hover:text-white uppercase transition-colors">
                 {card.label}
               </span>
 
@@ -77,14 +77,14 @@ export default function HeroSection() {
         </div>
         
         {/* Main Content Area */}
-        <div className="w-full max-w-3xl space-y-8 mt-auto md:mt-24 pointer-events-none">
+        <div className="w-full max-w-3xl space-y-6 md:space-y-8 mt-auto lg:mt-24 pointer-events-none">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="flex items-center gap-4 text-[10px] md:text-xs font-mono tracking-[0.2em] text-[var(--text-muted)] uppercase"
+            className="flex items-center gap-3 md:gap-4 text-[9px] md:text-xs font-mono tracking-[0.15em] md:tracking-[0.2em] text-[var(--text-muted)] uppercase"
           >
-            <span className="w-6 h-[1px] bg-[var(--accent-cyan)] rounded-full" />
+            <span className="w-4 md:w-6 h-[1px] bg-[var(--accent-cyan)] rounded-full" />
             // Building Secure, Intelligent Systems
           </motion.div>
 
@@ -92,11 +92,11 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-            className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight text-white leading-[1.15] drop-shadow-lg"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight text-white leading-[1.2] lg:leading-[1.15] drop-shadow-lg"
           >
-            Software Engineer <br />
-            <span className="text-[var(--text-muted)]">&</span> Cybersecurity Specialist <br />
-            Exploring <span className="text-[var(--accent-cyan)] drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]">AI</span> <span className="text-[var(--text-muted)]">&</span> Building <br />
+            Software Engineer <br className="hidden sm:block" />
+            <span className="text-[var(--text-muted)]">&</span> Cybersecurity Specialist <br className="hidden sm:block" />
+            Exploring <span className="text-[var(--accent-cyan)] drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]">AI</span> <span className="text-[var(--text-muted)]">&</span> Building <br className="hidden sm:block" />
             What's Next
           </motion.h1>
 
@@ -104,7 +104,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-sm md:text-base text-[var(--text-secondary)] max-w-xl leading-relaxed drop-shadow-md"
+            className="text-xs sm:text-sm md:text-base text-[var(--text-secondary)] max-w-xl leading-relaxed drop-shadow-md"
           >
             I build secure, scalable and intelligent systems — from machine learning models to real-world applications, with a focus on cybersecurity and modern software engineering.
           </motion.p>
@@ -113,18 +113,18 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap gap-4 pt-4 pointer-events-auto"
+            className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 pt-4 pointer-events-auto w-full sm:w-auto"
           >
             <button 
               onClick={scrollToNext}
-              className="group relative px-6 py-3 border border-[var(--border-strong)] hover:border-[var(--accent-cyan)] bg-black/20 hover:bg-[var(--accent-cyan)]/5 backdrop-blur-sm transition-all flex items-center gap-3 text-xs font-mono tracking-widest text-white uppercase rounded-xl"
+              className="group relative px-6 py-3 border border-[var(--border-strong)] hover:border-[var(--accent-cyan)] bg-black/20 hover:bg-[var(--accent-cyan)]/5 backdrop-blur-sm transition-all flex items-center justify-center gap-3 text-[10px] md:text-xs font-mono tracking-widest text-white uppercase rounded-xl w-full sm:w-auto"
             >
               View Projects
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
             <a 
               href="mailto:Youssefelsayed5520055@gmail.com"
-              className="group relative px-6 py-3 border border-transparent hover:border-[var(--border-subtle)] bg-transparent hover:bg-black/20 backdrop-blur-sm transition-all flex items-center gap-3 text-xs font-mono tracking-widest text-[var(--text-secondary)] hover:text-white uppercase rounded-xl"
+              className="group relative px-6 py-3 border border-transparent hover:border-[var(--border-subtle)] bg-transparent hover:bg-black/20 backdrop-blur-sm transition-all flex items-center justify-center gap-3 text-[10px] md:text-xs font-mono tracking-widest text-[var(--text-secondary)] hover:text-white uppercase rounded-xl w-full sm:w-auto"
             >
               Contact Me
             </a>
@@ -132,16 +132,16 @@ export default function HeroSection() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="w-full flex justify-between items-end pb-4 pt-12 md:pt-0 pointer-events-none opacity-60">
+        <div className="w-full flex justify-between items-end pb-4 pt-12 lg:pt-0 pointer-events-none opacity-60">
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="flex items-center gap-4 text-[10px] font-mono tracking-[0.2em] text-[var(--text-muted)] uppercase"
+            className="flex items-center gap-3 md:gap-4 text-[9px] md:text-[10px] font-mono tracking-[0.15em] md:tracking-[0.2em] text-[var(--text-muted)] uppercase"
           >
             <div className="flex flex-col items-center gap-1">
-              <div className="w-[1px] h-8 bg-gradient-to-b from-transparent to-[var(--text-muted)]" />
-              <div className="w-2 h-2 border border-[var(--accent-cyan)] rotate-45" />
+              <div className="w-[1px] h-6 md:h-8 bg-gradient-to-b from-transparent to-[var(--text-muted)]" />
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 border border-[var(--accent-cyan)] rotate-45" />
             </div>
             Scroll
           </motion.div>
@@ -150,10 +150,10 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="text-[9px] md:text-[10px] font-mono tracking-[0.2em] text-[var(--text-muted)] uppercase flex items-center gap-3"
+            className="text-[8px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.1em] sm:tracking-[0.2em] text-[var(--text-muted)] uppercase flex items-center gap-2 md:gap-3 text-right max-w-[50%]"
           >
-            <span className="w-1.5 h-1.5 bg-[var(--accent-cyan)] animate-pulse" />
-            CS / Cybersecurity / AI / ML
+            <span className="w-1.5 h-1.5 bg-[var(--accent-cyan)] animate-pulse flex-shrink-0" />
+            <span className="truncate sm:overflow-visible sm:whitespace-normal">CS / Cyber / AI</span>
           </motion.div>
         </div>
 

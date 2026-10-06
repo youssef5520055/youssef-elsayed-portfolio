@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import { Toaster } from 'sonner'
 import '@/styles/globals.css' // Adjusting import to use @/styles alias if available or relative
 
 export const metadata: Metadata = {
@@ -34,8 +35,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark scroll-smooth ${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="antialiased bg-background text-foreground min-h-screen selection:bg-primary/20 selection:text-primary">
-
         {children}
+        <Toaster theme="dark" position="bottom-right" />
       </body>
     </html>
   )
