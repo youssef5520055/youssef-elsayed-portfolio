@@ -1,56 +1,122 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Mail, Linkedin, FileText, ArrowRight, Github } from "lucide-react"
 import { useEffect, useState } from "react"
-import EtchedAccretion from "@/components/ui/etched-accretion"
+import { motion } from "framer-motion"
+import {
+  Mail,
+  Linkedin,
+  Github,
+  FileText,
+  ArrowRight,
+  ArrowDown,
+} from "lucide-react"
+import EtchedAccretion, {
+  type AccretionParams,
+} from "@/components/ui/etched-accretion"
+import SlotText from "@/components/portfolio/SlotText"
+import { IDENTITY } from "@/lib/portfolio-data"
+import { ease } from "@/lib/motion"
 
-const DecryptedText = ({ text }: { text: string }) => {
+const CIPHER_CHARS = "0123456789#@$%&*+=<>/\\|{}[]ABCDEF"
+
+const ACCRETION_PARAMS: Partial<AccretionParams> = {
+  diskColor: "#26D0A8",
+  streakColor: "#F0F4F2",
+  glowColor: "#148F77",
+  cloudColor: "#092B28",
+  background: "#06090B",
+  crimson: 0.0,
+  angle: -10,
+  inclination: 0.36,
+  center: [0.72, 0.5],
+  speed: 0.75,
+  grain: 0.65,
+  lensing: 1.15,
+  exposure: 1.1,
+}
+
+const QUICK_ACCESS_LINKS = [
+  {
+    icon: Mail,
+    label: "EMAIL",
+    href: IDENTITY.emailHref,
+    external: false,
+    ariaLabel: "Send an email to Youssef Elsayed",
+  },
+  {
+    icon: Linkedin,
+    label: "LINKEDIN",
+    href: IDENTITY.linkedin,
+    external: true,
+    ariaLabel: "Visit Youssef Elsayed on LinkedIn",
+  },
+  {
+    icon: Github,
+    label: "GITHUB",
+    href: IDENTITY.github,
+    external: true,
+    ariaLabel: "Visit Youssef Elsayed on GitHub",
+  },
+  {
+    icon: FileText,
+    label: "RESUME",
+    href: IDENTITY.resumePath,
+    external: true,
+    ariaLabel: "Open Youssef Elsayed's CV PDF",
+  },
+] as const
+
+function DecryptedText({ text }: { text: string }) {
   const [displayText, setDisplayText] = useState(text)
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
     if (mediaQuery.matches) {
       setDisplayText(text)
       return
     }
 
-    const CHARS = "0123456789#@$%&*+=<>/\\|{}[]ABCDEF"
-    let iteration = -3
-    let interval: NodeJS.Timeout
+    let iteration = -2
+    let intervalId: ReturnType<typeof setInterval> | undefined
 
-    setDisplayText(
-      text.split("").map(c => c === " " ? " " : CHARS[Math.floor(Math.random() * CHARS.length)]).join("")
-    )
+    const timeoutId = setTimeout(() => {
+      setDisplayText(
+        text
+          .split("")
+          .map((c) =>
+            c === " "
+              ? " "
+              : CIPHER_CHARS[Math.floor(Math.random() * CIPHER_CHARS.length)]
+          )
+          .join("")
+      )
 
-    const animate = () => {
-      interval = setInterval(() => {
-        setDisplayText((current) => 
+      intervalId = setInterval(() => {
+        setDisplayText(
           text
             .split("")
             .map((char, index) => {
               if (char === " ") return " "
-              if (index < iteration) {
-                return text[index]
-              }
-              return CHARS[Math.floor(Math.random() * CHARS.length)]
+              if (index < iteration) return text[index]
+              return CIPHER_CHARS[
+                Math.floor(Math.random() * CIPHER_CHARS.length)
+              ]
             })
             .join("")
         )
 
         if (iteration >= text.length) {
-          clearInterval(interval)
+          if (intervalId) clearInterval(intervalId)
+          setDisplayText(text)
         }
-        
-        iteration += 1
-      }, 90)
-    }
 
-    const timeout = setTimeout(animate, 200)
+        iteration += 1
+      }, 28)
+    }, 100)
 
     return () => {
-      clearInterval(interval)
-      clearTimeout(timeout)
+      clearTimeout(timeoutId)
+      if (intervalId) clearInterval(intervalId)
     }
   }, [text])
 
@@ -58,168 +124,237 @@ const DecryptedText = ({ text }: { text: string }) => {
     const ampersand = displayText.charAt(0)
     const rest = displayText.slice(1)
     return (
-      <>
-        <span className="text-[var(--text-muted)]">{ampersand}</span>{rest}
-      </>
+      <span className="relative inline-block max-w-full align-bottom">
+        <span className="sr-only">{text}</span>
+        {/* Invisible ghost reserves exact final geometry to eliminate CLS */}
+        <span aria-hidden="true" className="invisible select-none">
+          <span className="font-sans font-light">&amp;</span>
+          <span className="font-serif italic font-normal tracking-[-0.015em]">
+            {" Cybersecurity Specialist"}
+          </span>
+        </span>
+        <span aria-hidden="true" className="absolute inset-0">
+          <span className="font-sans font-light text-[var(--text-muted)]">
+            {ampersand}
+          </span>
+          <span className="font-serif italic font-normal text-[var(--text-primary)] serif-luminance tracking-[-0.015em]">
+            {rest}
+          </span>
+        </span>
+      </span>
     )
   }
 
-  return <span>{displayText}</span>
+  return (
+    <>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">{displayText}</span>
+    </>
+  )
+}
+
+function useCairoClock() {
+  const [time, setTime] = useState<string>("")
+
+  useEffect(() => {
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Africa/Cairo",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+
+    const update = () => setTime(formatter.format(new Date()))
+    update()
+
+    const timer = setInterval(update, 15_000)
+    return () => clearInterval(timer)
+  }, [])
+
+  return time
 }
 
 export default function HeroSection() {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
-  const scrollToNext = () => {
-    const nextSection = document.getElementById('projects')
-    if (nextSection) {
-      nextSection.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
-  // Cyan "Technical OS" styling for the singularity
-  const accretionParams = {
-    diskColor: "#00E5FF",       // accent-cyan
-    streakColor: "#ffffff",     // bright white inner
-    glowColor: "#00E5FF",       // cyan flare
-    cloudColor: "#0a192f",      // dark navy for nebula
-    background: "#050505",      // bg-deep
-    crimson: 0.15,
-    angle: -10,                 
-    inclination: 0.35,          // match the tilt in the reference
-    center: [0.7, 0.5] as [number, number], // push to the right side
-    speed: 0.8,
-    grain: 0.8,
-    lensing: 1.2,
-    exposure: 1.2
-  }
-
-  const CONTACT_CARDS = [
-    { icon: Mail, label: "EMAIL", href: "mailto:Youssefelsayed5520055@gmail.com?subject=Professional%20Inquiry%3A%20Software%20Engineering%20%26%20Security&body=Hello%20Youssef%2C%0D%0A%0D%0AI%20recently%20reviewed%20your%20portfolio%20and%20was%20highly%20impressed%20by%20your%20expertise%20in%20software%20architecture%2C%20cybersecurity%2C%20and%20AI.%0D%0A%0D%0AI%20am%20reaching%20out%20to%20discuss%20a%20potential%20opportunity%20and%20would%20love%20to%20connect.%0D%0A%0D%0ABest%20regards%2C%0D%0A%5BYour%20Name%5D" },
-    { icon: Linkedin, label: "LINKEDIN", href: "https://linkedin.com/in/youssef-elsayed-543695344" },
-    { icon: Github, label: "GITHUB", href: "https://github.com/youssef5520055" },
-    { icon: FileText, label: "RESUME", href: "/CV/Youssef_Elsayed_Abdelaziz.pdf" }
-  ]
+  const cairoTime = useCairoClock()
 
   return (
-    <EtchedAccretion 
-      height="100svh" 
-      params={accretionParams} 
-      className=""
-    >
-      <div className="relative w-full flex-1 max-w-[1600px] mx-auto px-6 lg:px-12 pt-32 pb-12 z-10 flex flex-col justify-between pointer-events-none min-h-full">
-        
-        {/* Top-Right Contact Cards (Absolute on Desktop, Scrollable/Grid on Mobile) */}
-        <div className="lg:absolute lg:top-32 lg:right-12 flex lg:flex-row flex-wrap lg:flex-nowrap gap-3 md:gap-4 z-20 mt-8 lg:mt-0 justify-start w-full lg:w-auto">
-          {CONTACT_CARDS.map((card, idx) => (
-            <motion.a
-              key={card.label}
-              href={card.href}
-              target={card.label !== "EMAIL" ? "_blank" : undefined}
-              initial={{ opacity: 0, y: -20 }}
+    <div id="top" className="relative p-3 sm:p-5 lg:p-6 bg-[var(--bg-deep)]">
+      <div className="relative rounded-2xl sm:rounded-[24px] overflow-hidden border border-[var(--border-subtle)] min-h-[calc(100svh-24px)] sm:min-h-[calc(100svh-40px)] lg:min-h-[calc(100svh-48px)] flex flex-col bg-[var(--bg-deep)] shadow-[0_24px_80px_rgba(0,0,0,0.6)]">
+        <EtchedAccretion
+          height="100%"
+          params={ACCRETION_PARAMS}
+          className="flex-1 justify-between"
+          aria-label="Hero introduction with interactive obsidian and glacial verdigris accretion singularity"
+        >
+          {/* Multi-layered readability scrim: protects left editorial copy without obscuring right singularity */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#06090B]/88 via-[#06090B]/52 to-transparent"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#06090B]/80 via-transparent to-[#06090B]/35"
+          />
+
+          {/* Main Inset Hero Grid */}
+          <div className="relative z-10 w-full flex-1 max-w-[1380px] mx-auto px-5 sm:px-8 lg:px-12 flex flex-col justify-between pointer-events-none">
+            {/* Top-Right Quick-Access Rail (Desktop tucked below navbar; crisp compact bar on mobile) */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 + (idx * 0.1), duration: 0.6, ease: "easeOut" }}
-              className="group relative flex flex-col items-center justify-center w-[calc(50%-6px)] sm:w-24 h-16 sm:h-20 md:w-32 md:h-24 border border-[var(--border-subtle)] hover:border-[var(--accent-cyan)]/50 bg-black/40 backdrop-blur-md pointer-events-auto transition-all hover:bg-black/60 rounded-2xl overflow-hidden shadow-lg"
+              transition={{ duration: 0.5, delay: 0.25, ease: ease.editorial }}
+              className="pointer-events-auto pt-24 sm:pt-28 lg:pt-0 lg:absolute lg:top-24 lg:right-10 z-20 w-full lg:w-auto"
             >
-              <card.icon className="w-4 h-4 md:w-5 md:h-5 text-[var(--text-secondary)] group-hover:text-[var(--accent-cyan)] mb-1 md:mb-2 transition-colors" strokeWidth={1.5} />
-              <span className="text-[8px] md:text-[10px] font-mono tracking-widest text-[var(--text-secondary)] group-hover:text-white uppercase transition-colors">
-                {card.label}
-              </span>
+              <div className="grid grid-cols-4 lg:flex items-center gap-1.5 sm:gap-2">
+                {QUICK_ACCESS_LINKS.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target={item.external ? "_blank" : undefined}
+                    rel={item.external ? "noopener noreferrer" : undefined}
+                    aria-label={item.ariaLabel}
+                    className="group relative flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 min-h-[50px] sm:min-h-0 sm:h-10 px-1.5 sm:px-3.5 rounded-xl border border-[var(--border-subtle)] bg-[#0D1216]/72 backdrop-blur-md hover:border-[var(--border-accent)] hover:bg-[#141C21]/90 hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-200 cursor-pointer shadow-[inset_0_1px_0_rgba(240,244,242,0.04)]"
+                  >
+                    <item.icon
+                      className="w-3.5 h-3.5 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] transition-colors shrink-0"
+                      strokeWidth={1.75}
+                      aria-hidden="true"
+                    />
+                    <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.08em] sm:tracking-[0.14em] uppercase text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">
+                      {item.label}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </motion.div>
 
-              {/* Bottom active line on hover - softened */}
-              <div className="absolute bottom-0 w-8 h-[2px] bg-transparent group-hover:bg-[var(--accent-cyan)] group-hover:shadow-[0_0_8px_var(--accent-cyan)] transition-all duration-300 rounded-t-full" />
-            </motion.a>
-          ))}
-        </div>
-        
-        {/* Main Content Area */}
-        <div className="w-full max-w-3xl space-y-6 md:space-y-8 mt-auto lg:mt-24 pointer-events-none">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="flex items-center gap-3 md:gap-4 text-[9px] md:text-xs font-mono tracking-[0.15em] md:tracking-[0.2em] text-[var(--text-muted)] uppercase"
-          >
-            <span className="w-4 md:w-6 h-[1px] bg-[var(--accent-cyan)] rounded-full" />
-            // Building Secure, Intelligent Systems
-          </motion.div>
+            {/* Center-Left Editorial Narrative */}
+            <div className="w-full max-w-3xl pt-10 sm:pt-14 lg:pt-36 pb-10 sm:pb-12 my-auto space-y-6 sm:space-y-7">
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, ease: ease.editorial }}
+                className="flex items-center gap-3 font-mono text-[11px] sm:text-xs tracking-[0.18em] uppercase text-[var(--text-secondary)]"
+              >
+                <span
+                  aria-hidden="true"
+                  className="w-7 h-[1px] bg-[var(--accent-primary)] shrink-0"
+                />
+                <span>{IDENTITY.heroEyebrow}</span>
+              </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight text-white leading-[1.2] lg:leading-[1.15] drop-shadow-lg"
-          >
-            Software Engineer <br className="hidden sm:block" />
-              <DecryptedText text="& Cybersecurity Specialist" /> <br className="hidden sm:block" />
-            Exploring <span className="text-[var(--accent-cyan)] drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]">AI</span> <span className="text-[var(--text-muted)]">&</span> Building <br className="hidden sm:block" />
-            What's Next
-          </motion.h1>
+              <motion.h1
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.08,
+                  ease: ease.editorial,
+                }}
+                className="text-[clamp(2.35rem,5.4vw,4.75rem)] leading-[1.06] tracking-[-0.03em] text-[var(--text-primary)]"
+              >
+                <span className="block font-sans font-semibold">
+                  Software Engineer
+                </span>
+                <span className="block mt-0.5">
+                  <DecryptedText text="& Cybersecurity Specialist" />
+                </span>
+                <span className="block mt-1 font-sans font-semibold">
+                  Exploring{" "}
+                  <span className="text-[var(--accent-primary)]">AI</span>
+                  <span className="text-[var(--text-muted)]"> &amp; </span>
+                  Building What&apos;s Next
+                </span>
+              </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xs sm:text-sm md:text-base text-[var(--text-secondary)] max-w-xl leading-relaxed drop-shadow-md"
-          >
-            I build secure, scalable and intelligent systems — from machine learning models to real-world applications, with a focus on cybersecurity and modern software engineering.
-          </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 pt-4 pointer-events-auto w-full sm:w-auto"
-          >
-            <button 
-              onClick={scrollToNext}
-              className="group relative px-6 py-3 border border-[var(--border-strong)] hover:border-[var(--accent-cyan)] bg-black/20 hover:bg-[var(--accent-cyan)]/5 backdrop-blur-sm transition-all flex items-center justify-center gap-3 text-[10px] md:text-xs font-mono tracking-widest text-white uppercase rounded-xl w-full sm:w-auto"
-            >
-              View Projects
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <a 
-              href="mailto:Youssefelsayed5520055@gmail.com?subject=Professional%20Inquiry%3A%20Software%20Engineering%20%26%20Security&body=Hello%20Youssef%2C%0D%0A%0D%0AI%20recently%20reviewed%20your%20portfolio%20and%20was%20highly%20impressed%20by%20your%20expertise%20in%20software%20architecture%2C%20cybersecurity%2C%20and%20AI.%0D%0A%0D%0AI%20am%20reaching%20out%20to%20discuss%20a%20potential%20opportunity%20and%20would%20love%20to%20connect.%0D%0A%0D%0ABest%20regards%2C%0D%0A%5BYour%20Name%5D"
-              className="group relative px-6 py-3 border border-transparent hover:border-[var(--border-subtle)] bg-transparent hover:bg-black/20 backdrop-blur-sm transition-all flex items-center justify-center gap-3 text-[10px] md:text-xs font-mono tracking-widest text-[var(--text-secondary)] hover:text-white uppercase rounded-xl w-full sm:w-auto"
-            >
-              Contact Me
-            </a>
-          </motion.div>
-        </div>
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.55,
+                  delay: 0.16,
+                  ease: ease.editorial,
+                }}
+                className="text-sm sm:text-base text-[var(--text-secondary)] max-w-xl leading-relaxed"
+              >
+                {IDENTITY.heroSubtitle}
+              </motion.p>
 
-        {/* Bottom Bar */}
-        <div className="w-full flex justify-between items-end pb-4 pt-12 lg:pt-0 pointer-events-none opacity-60">
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="flex items-center gap-3 md:gap-4 text-[9px] md:text-[10px] font-mono tracking-[0.15em] md:tracking-[0.2em] text-[var(--text-muted)] uppercase"
-          >
-            <div className="flex flex-col items-center gap-1">
-              <div className="w-[1px] h-6 md:h-8 bg-gradient-to-b from-transparent to-[var(--text-muted)]" />
-              <div className="w-1.5 h-1.5 md:w-2 md:h-2 border border-[var(--accent-cyan)] rotate-45" />
+              {/* Primary & Secondary CTAs */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.55,
+                  delay: 0.24,
+                  ease: ease.editorial,
+                }}
+                className="pointer-events-auto flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-3.5 pt-2"
+              >
+                <a
+                  href="#projects"
+                  className="group inline-flex items-center justify-center gap-2.5 h-12 px-6 rounded-xl bg-[var(--surface-platinum)] text-[var(--ink-dark)] text-[13px] font-medium tracking-[-0.01em] hover:bg-white transition-all duration-200 active:scale-[0.97] shadow-[0_10px_28px_rgba(0,0,0,0.4)] cursor-pointer"
+                >
+                  <SlotText text="View Projects" />
+                  <ArrowRight
+                    className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </a>
+
+                <a
+                  href={IDENTITY.emailHref}
+                  className="group inline-flex items-center justify-center gap-2.5 h-12 px-6 rounded-xl border border-[var(--border-strong)] bg-[#0D1216]/65 backdrop-blur-md text-[var(--text-primary)] text-[13px] font-medium tracking-[-0.01em] hover:border-[var(--border-accent)] hover:bg-[#141C21]/88 transition-all duration-200 active:scale-[0.97] cursor-pointer"
+                >
+                  <SlotText text="Contact Me" />
+                </a>
+              </motion.div>
             </div>
-            Scroll
-          </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="text-[8px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.1em] sm:tracking-[0.2em] text-[var(--text-muted)] uppercase flex items-center gap-2 md:gap-3 text-right max-w-[50%]"
-          >
-            <span className="w-1.5 h-1.5 bg-[var(--accent-cyan)] animate-pulse flex-shrink-0" />
-            <span className="truncate sm:overflow-visible sm:whitespace-normal">CS / Cyber / AI</span>
-          </motion.div>
-        </div>
+            {/* Bottom Telemetry Bar */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4, ease: ease.out }}
+              className="pointer-events-auto w-full flex items-center justify-between gap-4 border-t border-[var(--border-subtle)]/80 py-4 sm:py-5"
+            >
+              {/* Left: Live Cairo Clock */}
+              <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.14em] uppercase text-[var(--text-secondary)] tabular-nums">
+                <span
+                  aria-hidden="true"
+                  className="w-1.5 h-1.5 rounded-full bg-[var(--text-muted)]"
+                />
+                <span>
+                  {cairoTime ? `${cairoTime} · ` : ""}
+                  {IDENTITY.timezoneLabel}
+                </span>
+              </div>
 
+              {/* Center: Scroll to Explore */}
+              <a
+                href="#manifesto"
+                aria-label="Scroll to explore manifesto section"
+                className="group inline-flex items-center justify-center gap-2 font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors min-h-[36px] min-w-[36px] px-2 rounded-md cursor-pointer"
+              >
+                <span className="hidden sm:inline">Scroll to Explore</span>
+                <ArrowDown
+                  className="w-3.5 h-3.5 text-[var(--accent-primary)] transition-transform duration-300 group-hover:translate-y-0.5 motion-safe:animate-bounce"
+                  style={{ animationDuration: "2.6s" }}
+                  aria-hidden="true"
+                />
+              </a>
+
+              {/* Right: Domain Telemetry */}
+              <div className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--text-secondary)]">
+                <span className="relative flex h-2 w-2" aria-hidden="true">
+                  <span className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent-primary)] opacity-60" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent-primary)]" />
+                </span>
+                <span>{IDENTITY.heroDomainPill}</span>
+              </div>
+            </motion.div>
+          </div>
+        </EtchedAccretion>
       </div>
-    </EtchedAccretion>
+    </div>
   )
 }
