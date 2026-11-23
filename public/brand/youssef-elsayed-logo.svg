@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 96" width="420" height="96" fill="none">
+  <!-- Classic YE Crest Mark (Dark Theme / Transparent Background) -->
+  <g transform="translate(8, 12)">
+    <rect x="1.5" y="1.5" width="69" height="69" rx="15" fill="#0B1114" stroke="#F0F4F2" stroke-opacity="0.25" stroke-width="1.6"/>
+    <rect x="7" y="7" width="58" height="58" rx="10.5" stroke="#26D0A8" stroke-opacity="0.38" stroke-width="1.15"/>
+    <path d="M57.5 12.2L59.8 14.5L57.5 16.8L55.2 14.5L57.5 12.2Z" fill="#26D0A8"/>
+    <path d="M18.5 21.5H24.6M33.5 21.5H39.1M21.5 21.5L28.9 35.2L36.3 21.5M28.9 35.2V50.2M24.8 50.2H33" stroke="#F0F4F2" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M42.2 21.5H53.6M42.2 21.5V50.2M42.2 35.6H51.4M42.2 50.2H53.9M53.6 21.5V24.4M53.9 50.2V47.3" stroke="#26D0A8" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- Hairline Divider -->
+  <line x1="98" y1="22" x2="98" y2="74" stroke="#F0F4F2" stroke-opacity="0.18" stroke-width="1"/>
+  <!-- Classic Editorial Wordmark -->
+  <text x="116" y="54" fill="#F0F4F2" font-family="'Instrument Serif', Georgia, 'Times New Roman', serif" font-size="38" letter-spacing="-0.5">
+    Youssef <tspan font-style="italic" fill="#26D0A8">Elsayed</tspan>
+  </text>
+  <text x="117" y="73" fill="#7E908A" font-family="'Geist Mono', 'JetBrains Mono', ui-monospace, monospace" font-size="10.5" letter-spacing="3.2">
+    SYSTEMS · SECURITY · AI
+  </text>
+</svg>
