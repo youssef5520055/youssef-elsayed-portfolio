@@ -1,161 +1,397 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Moon, Sun, Menu, X } from "lucide-react"
+import { Moon, Sun, Menu, X, Mail, FileText, ArrowUpRight } from "lucide-react"
 import { toast } from "sonner"
+import { IDENTITY } from "@/lib/portfolio-data"
+import { ease, spring } from "@/lib/motion"
+import { cn } from "@/lib/utils"
+import SlotText from "@/components/portfolio/SlotText"
+import BrandLogo from "@/components/portfolio/BrandLogo"
 
 const NAV_LINKS = [
-  { label: "HOME", href: "#" },
-  { label: "ABOUT", href: "#about" },
-  { label: "PROJECTS", href: "#projects" },
-  { label: "SKILLS", href: "#skills" },
-  { label: "EXPERIENCE", href: "#experience" },
-  { label: "CONTACT", href: "#contact" }
-]
+  { id: "about", label: "About", href: "#about" },
+  { id: "projects", label: "Work", href: "#projects" },
+  { id: "skills", label: "Skills", href: "#skills" },
+  { id: "experience", label: "Experience", href: "#experience" },
+  { id: "certifications", label: "Certs", href: "#certifications" },
+  { id: "contact", label: "Contact", href: "#contact" },
+] as const
+
+type SectionId = (typeof NAV_LINKS)[number]["id"] | ""
 
 export default function Navbar() {
-  const [active, setActive] = useState("HOME")
   const [scrolled, setScrolled] = useState(false)
+  const [activeId, setActiveId] = useState<SectionId>("")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isLight, setIsLight] = useState(false)
+  const [isLightAttempt, setIsLightAttempt] = useState(false)
 
+  const themeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const menuTriggerRef = useRef<HTMLButtonElement | null>(null)
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null)
+  const wasOpenRef = useRef(false)
+
+  // Morph navbar on scroll (> 64px) & handle top/bottom edge active states
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      const y = window.scrollY
+      setScrolled(y > 64)
+
+      if (y < 220) {
+        setActiveId("")
+        return
+      }
+
+      const nearBottom =
+        window.innerHeight + y >= document.documentElement.scrollHeight - 80
+      if (nearBottom) {
+        setActiveId("contact")
+      }
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const handleThemeToggle = () => {
-    setIsLight(true)
+  // IntersectionObserver scroll-spy for desktop & mobile active state
+  useEffect(() => {
+    const ids = NAV_LINKS.map((l) => l.id)
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null)
+
+    if (elements.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (window.scrollY < 220) return
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+
+        if (visible.length > 0) {
+          setActiveId(visible[0].target.id as SectionId)
+        }
+      },
+      {
+        rootMargin: "-30% 0px -55% 0px",
+        threshold: [0, 0.15, 0.35, 0.6],
+      }
+    )
+
+    elements.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  // Cleanup theme-lock timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (themeTimerRef.current) clearTimeout(themeTimerRef.current)
+    }
+  }, [])
+
+  // Accessible mobile drawer: Escape close, body scroll lock, focus management, desktop resize close
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      wasOpenRef.current = true
+      const prevOverflow = document.body.style.overflow
+      document.body.style.overflow = "hidden"
+
+      const focusTimer = setTimeout(() => {
+        closeButtonRef.current?.focus()
+      }, 40)
+
+      const onKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          setMobileMenuOpen(false)
+        }
+      }
+
+      const onResize = () => {
+        if (window.innerWidth >= 1024) {
+          setMobileMenuOpen(false)
+        }
+      }
+
+      window.addEventListener("keydown", onKeyDown)
+      window.addEventListener("resize", onResize)
+
+      return () => {
+        clearTimeout(focusTimer)
+        document.body.style.overflow = prevOverflow
+        window.removeEventListener("keydown", onKeyDown)
+        window.removeEventListener("resize", onResize)
+      }
+    } else if (wasOpenRef.current) {
+      wasOpenRef.current = false
+      menuTriggerRef.current?.focus()
+    }
+  }, [mobileMenuOpen])
+
+  // Youssef's Dark-Mode Lock Easter Egg
+  const handleThemeToggle = useCallback(() => {
+    if (themeTimerRef.current) {
+      clearTimeout(themeTimerRef.current)
+    }
+    setIsLightAttempt(true)
     toast.error("System Override Prevented", {
-      description: "Dark mode is strictly enforced for optimal security visibility.",
+      description:
+        "Dark mode is strictly enforced for optimal security visibility.",
       duration: 3000,
     })
-    // Revert back to moon after a short delay
-    setTimeout(() => {
-      setIsLight(false)
+    themeTimerRef.current = setTimeout(() => {
+      setIsLightAttempt(false)
     }, 1500)
-  }
+  }, [])
 
   return (
     <>
-      <motion.nav 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[var(--bg-deep)]/80 backdrop-blur-md border-b border-[var(--border-subtle)] py-4' : 'bg-transparent py-6'}`}
+      <header
+        className={cn(
+          "fixed top-0 inset-x-0 z-50 pointer-events-none transition-[padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          scrolled
+            ? "pt-3 sm:pt-4 px-3 sm:px-6"
+            : "pt-5 sm:pt-7 lg:pt-8 px-5 sm:px-9 lg:px-12"
+        )}
       >
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between">
-          
-          {/* Logo Area */}
-          <div className="flex items-center gap-4">
-            <div className="font-bold text-xl tracking-tighter text-white">
-              YE
-            </div>
-            <div className="hidden sm:block text-[10px] font-mono tracking-[0.2em] text-[var(--text-muted)] uppercase border-l border-[var(--border-subtle)] pl-4">
-              Youssef Elsayed
-            </div>
-          </div>
+        <nav
+          aria-label="Primary navigation"
+          className={cn(
+            "pointer-events-auto mx-auto w-full flex items-center justify-between transition-[max-width,height,padding,background-color,border-color,border-radius,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+            scrolled
+              ? "max-w-[880px] h-[56px] px-3.5 sm:px-5 rounded-xl bg-[#0D1216]/88 backdrop-blur-md border border-[var(--border-strong)] shadow-[0_14px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(240,244,242,0.06)]"
+              : "max-w-[1380px] h-[70px] px-2 sm:px-4 rounded-2xl bg-transparent border border-transparent shadow-none"
+          )}
+        >
+          {/* Left: Classic YE Emblem + Youssef Elsayed Wordmark */}
+          <a
+            href="#top"
+            onClick={() => setActiveId("")}
+            aria-label={`${IDENTITY.displayName} — Back to top`}
+            className="group flex items-center shrink-0 rounded-lg py-1 pr-1 transition-colors"
+          >
+            <BrandLogo variant="navbar" showNameOnMobile={false} />
+          </a>
 
-          {/* Center Links (Desktop) */}
-          <div className="hidden lg:flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
-              <a 
-                key={link.label}
-                href={link.href}
-                onClick={() => setActive(link.label)}
-                className="relative text-[10px] font-mono tracking-[0.15em] uppercase text-[var(--text-secondary)] hover:text-white transition-colors py-2"
-              >
-                {link.label}
-                {active === link.label && (
-                  <motion.div 
-                    layoutId="nav-indicator"
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-[2px] bg-[var(--accent-cyan)] shadow-[0_0_8px_var(--accent-cyan)] rounded-full"
-                  />
-                )}
-              </a>
-            ))}
-          </div>
+          {/* Center: Desktop 6 Links with SlotText & Scroll-Spy */}
+          <ul className="hidden lg:flex items-center gap-1">
+            {NAV_LINKS.map((link) => {
+              const isActive = activeId === link.id
+              return (
+                <li key={link.id}>
+                  <a
+                    href={link.href}
+                    onClick={() => setActiveId(link.id)}
+                    aria-current={isActive ? "location" : undefined}
+                    className={cn(
+                      "group relative inline-flex items-center justify-center px-3 py-2 rounded-lg text-[12px] font-medium tracking-[-0.01em] transition-colors duration-200",
+                      isActive
+                        ? "text-[var(--text-primary)]"
+                        : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                    )}
+                  >
+                    <SlotText text={link.label} />
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-active-dot"
+                        transition={spring.crisp}
+                        aria-hidden="true"
+                        className="absolute inset-x-3 bottom-0.5 h-[2px] rounded-full bg-[var(--accent-primary)] shadow-[0_0_8px_var(--accent-glow)]"
+                      />
+                    )}
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
 
-          {/* Right Controls */}
-          <div className="flex items-center gap-6">
-            <button 
+          {/* Right: Dark-Mode Lock + Get in Touch CTA + Mobile Drawer Trigger */}
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            <button
+              type="button"
               onClick={handleThemeToggle}
-              className="text-[var(--text-muted)] hover:text-[var(--accent-cyan)] transition-colors relative"
-              aria-label="Toggle Theme"
+              aria-label="Toggle color theme"
+              title="Dark mode enforced"
+              className="relative flex items-center justify-center w-10 h-10 rounded-lg border border-transparent hover:border-[var(--border-subtle)] hover:bg-[var(--bg-elevated)]/80 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-all duration-200 active:scale-[0.95] cursor-pointer"
             >
-              <AnimatePresence mode="wait">
-                {isLight ? (
-                  <motion.div
+              <AnimatePresence mode="wait" initial={false}>
+                {isLightAttempt ? (
+                  <motion.span
                     key="sun"
-                    initial={{ scale: 0, rotate: -90 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    exit={{ scale: 0, rotate: 90 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ scale: 0.75, opacity: 0, rotate: -35 }}
+                    animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                    exit={{ scale: 0.75, opacity: 0, rotate: 35 }}
+                    transition={{ duration: 0.18, ease: ease.out }}
+                    className="inline-flex items-center justify-center"
                   >
-                    <Sun className="w-4 h-4 text-[var(--accent-cyan)]" />
-                  </motion.div>
+                    <Sun
+                      className="w-[17px] h-[17px] text-[var(--accent-primary)]"
+                      aria-hidden="true"
+                    />
+                  </motion.span>
                 ) : (
-                  <motion.div
+                  <motion.span
                     key="moon"
-                    initial={{ scale: 0, rotate: 90 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    exit={{ scale: 0, rotate: -90 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ scale: 0.75, opacity: 0, rotate: 35 }}
+                    animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                    exit={{ scale: 0.75, opacity: 0, rotate: -35 }}
+                    transition={{ duration: 0.18, ease: ease.out }}
+                    className="inline-flex items-center justify-center"
                   >
-                    <Moon className="w-4 h-4" />
-                  </motion.div>
+                    <Moon className="w-[17px] h-[17px]" aria-hidden="true" />
+                  </motion.span>
                 )}
               </AnimatePresence>
             </button>
-            <button className="text-[var(--text-muted)] hover:text-white transition-colors lg:hidden" onClick={() => setMobileMenuOpen(true)}>
-              <Menu className="w-5 h-5" />
-            </button>
-            <button 
-              onClick={() => setMobileMenuOpen(true)}
-              className="hidden lg:flex flex-col gap-[4px] cursor-pointer group p-1"
-              aria-label="Open Menu"
+
+            <a
+              href="#contact"
+              onClick={() => setActiveId("contact")}
+              className="group hidden lg:inline-flex items-center justify-center h-9 px-4 rounded-lg bg-[var(--surface-platinum)] text-[var(--ink-dark)] text-[12px] font-medium tracking-[-0.01em] hover:bg-white transition-all duration-200 active:scale-[0.97] shadow-[0_2px_10px_rgba(0,0,0,0.28)]"
             >
-              <div className="w-6 h-[1px] bg-[var(--text-muted)] group-hover:bg-white transition-colors" />
-              <div className="w-4 h-[1px] bg-[var(--text-muted)] group-hover:bg-white transition-colors ml-auto" />
-              <div className="w-5 h-[1px] bg-[var(--text-muted)] group-hover:bg-white transition-colors ml-auto" />
+              <SlotText text="Get in Touch" />
+            </a>
+
+            <button
+              ref={menuTriggerRef}
+              type="button"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-drawer"
+              aria-label={
+                mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"
+              }
+              className="lg:hidden flex items-center justify-center w-11 h-11 rounded-lg border border-[var(--border-subtle)] bg-[#0D1216]/75 text-[var(--text-primary)] hover:border-[var(--border-accent)] hover:text-[var(--accent-primary)] transition-all duration-200 active:scale-[0.95] cursor-pointer"
+            >
+              <Menu className="w-5 h-5" aria-hidden="true" />
             </button>
           </div>
+        </nav>
+      </header>
 
-        </div>
-      </motion.nav>
-
-      {/* Fullscreen Overlay Menu */}
+      {/* Mobile Full-Screen Frosted-Obsidian Navigation Sheet */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-[#050505]/95 backdrop-blur-xl flex flex-col items-center justify-center"
+            id="mobile-nav-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.24, ease: ease.out }}
+            className="fixed inset-0 z-[60] lg:hidden bg-[#06090B]/95 backdrop-blur-xl flex flex-col justify-between px-6 py-6 overflow-y-auto"
           >
-            <button 
-              onClick={() => setMobileMenuOpen(false)}
-              className="absolute top-6 right-6 p-2 text-[var(--text-muted)] hover:text-white transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <div className="flex flex-col items-center gap-8">
-              {NAV_LINKS.map((link) => (
-                <a 
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => {
-                    setActive(link.label)
-                    setMobileMenuOpen(false)
-                  }}
-                  className="text-lg font-mono tracking-[0.2em] uppercase text-[var(--text-secondary)] hover:text-white hover:text-[var(--accent-cyan)] transition-colors"
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-5">
+              <a
+                href="#top"
+                onClick={() => {
+                  setActiveId("")
+                  setMobileMenuOpen(false)
+                }}
+                aria-label={`${IDENTITY.displayName} — Back to top`}
+                className="flex items-center"
+              >
+                <BrandLogo variant="compact" />
+              </a>
+
+              <button
+                ref={closeButtonRef}
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close navigation menu"
+                className="flex items-center justify-center w-11 h-11 rounded-xl border border-[var(--border-strong)] bg-[var(--bg-surface)] text-[var(--text-primary)] hover:border-[var(--border-accent)] hover:text-[var(--accent-primary)] transition-colors active:scale-[0.95] cursor-pointer"
+              >
+                <X className="w-5 h-5" aria-hidden="true" />
+              </button>
+            </div>
+
+            {/* Drawer Links */}
+            <nav aria-label="Mobile sections" className="my-auto py-8">
+              <ul className="flex flex-col divide-y divide-[var(--border-subtle)]">
+                {NAV_LINKS.map((link, idx) => {
+                  const isActive = activeId === link.id
+                  return (
+                    <li key={link.id}>
+                      <a
+                        href={link.href}
+                        onClick={() => {
+                          setActiveId(link.id)
+                          setMobileMenuOpen(false)
+                        }}
+                        aria-current={isActive ? "location" : undefined}
+                        className="group flex items-center justify-between py-4 min-h-[56px] transition-colors"
+                      >
+                        <div className="flex items-baseline gap-4">
+                          <span className="font-mono text-[11px] tracking-[0.16em] text-[var(--text-muted)] tabular-nums">
+                            0{idx + 1}
+                          </span>
+                          <span
+                            className={cn(
+                              "font-serif text-3xl tracking-[-0.02em] transition-colors",
+                              isActive
+                                ? "italic text-[var(--accent-primary)]"
+                                : "text-[var(--text-primary)] group-hover:text-[var(--accent-primary)]"
+                            )}
+                          >
+                            {link.label}
+                          </span>
+                        </div>
+                        <ArrowUpRight
+                          className={cn(
+                            "w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
+                            isActive
+                              ? "text-[var(--accent-primary)]"
+                              : "text-[var(--text-muted)] group-hover:text-[var(--text-primary)]"
+                          )}
+                          aria-hidden="true"
+                        />
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+            </nav>
+
+            {/* Drawer Footer Quick Actions */}
+            <div className="border-t border-[var(--border-subtle)] pt-6 space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <a
+                  href={IDENTITY.resumePath}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 h-12 rounded-xl bg-[var(--surface-platinum)] text-[var(--ink-dark)] text-xs font-medium active:scale-[0.97] transition-transform"
                 >
-                  {link.label}
+                  <FileText className="w-4 h-4" aria-hidden="true" />
+                  <span>Resume</span>
                 </a>
-              ))}
+                <a
+                  href={IDENTITY.emailHref}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 h-12 rounded-xl border border-[var(--border-strong)] bg-[var(--bg-surface)] text-[var(--text-primary)] text-xs font-medium active:scale-[0.97] transition-transform"
+                >
+                  <Mail
+                    className="w-4 h-4 text-[var(--accent-primary)]"
+                    aria-hidden="true"
+                  />
+                  <span>Email</span>
+                </a>
+              </div>
+              <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--text-muted)]">
+                <span>{IDENTITY.locationSecondary}</span>
+                <span className="flex items-center gap-2">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)]"
+                    aria-hidden="true"
+                  />
+                  {IDENTITY.heroDomainPill}
+                </span>
+              </div>
             </div>
           </motion.div>
         )}
