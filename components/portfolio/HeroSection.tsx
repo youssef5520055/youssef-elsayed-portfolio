@@ -17,7 +17,7 @@ import SlotText from "@/components/portfolio/SlotText"
 import { IDENTITY } from "@/lib/portfolio-data"
 import { ease } from "@/lib/motion"
 
-const CIPHER_CHARS = "0123456789#@$%&*+=<>/\\|{}[]ABCDEF"
+const CIPHER_CHARS = "0123456789abcdef/<>+-:*"
 
 const ACCRETION_PARAMS: Partial<AccretionParams> = {
   diskColor: "#26D0A8",
@@ -67,52 +67,42 @@ const QUICK_ACCESS_LINKS = [
 ] as const
 
 function DecryptedText({ text }: { text: string }) {
-  const [displayText, setDisplayText] = useState(text)
+  const [revealedCount, setRevealedCount] = useState(text.length)
+  const [scrambleChars, setScrambleChars] = useState<string[]>(() => text.split(""))
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
     if (mediaQuery.matches) {
-      setDisplayText(text)
+      setRevealedCount(text.length)
+      setScrambleChars(text.split(""))
       return
     }
 
-    let iteration = -2
+    let iteration = 0
     let intervalId: ReturnType<typeof setInterval> | undefined
 
+    const nextScrambled = (locked: number) =>
+      text.split("").map((char, idx) => {
+        if (char === " " || idx < locked) return char
+        return CIPHER_CHARS[Math.floor(Math.random() * CIPHER_CHARS.length)]
+      })
+
     const timeoutId = setTimeout(() => {
-      setDisplayText(
-        text
-          .split("")
-          .map((c) =>
-            c === " "
-              ? " "
-              : CIPHER_CHARS[Math.floor(Math.random() * CIPHER_CHARS.length)]
-          )
-          .join("")
-      )
+      setRevealedCount(0)
+      setScrambleChars(nextScrambled(0))
 
       intervalId = setInterval(() => {
-        setDisplayText(
-          text
-            .split("")
-            .map((char, index) => {
-              if (char === " ") return " "
-              if (index < iteration) return text[index]
-              return CIPHER_CHARS[
-                Math.floor(Math.random() * CIPHER_CHARS.length)
-              ]
-            })
-            .join("")
-        )
+        iteration += 1
+        setRevealedCount(iteration)
+        setScrambleChars(nextScrambled(iteration))
 
         if (iteration >= text.length) {
           if (intervalId) clearInterval(intervalId)
-          setDisplayText(text)
+          setRevealedCount(text.length)
+          setScrambleChars(text.split(""))
         }
-
-        iteration += 1
-      }, 28)
-    }, 100)
+      }, 30)
+    }, 80)
 
     return () => {
       clearTimeout(timeoutId)
@@ -121,25 +111,53 @@ function DecryptedText({ text }: { text: string }) {
   }, [text])
 
   if (text === "& Cybersecurity Specialist") {
-    const ampersand = displayText.charAt(0)
-    const rest = displayText.slice(1)
+    const words = text.split(" ")
+    let runningIdx = 0
+
     return (
-      <span className="relative inline-block max-w-full align-bottom">
+      <span className="inline">
         <span className="sr-only">{text}</span>
-        {/* Invisible ghost reserves exact final geometry to eliminate CLS */}
-        <span aria-hidden="true" className="invisible select-none">
-          <span className="font-sans font-light">&amp;</span>
-          <span className="font-serif italic font-normal tracking-[-0.015em]">
-            {" Cybersecurity Specialist"}
-          </span>
-        </span>
-        <span aria-hidden="true" className="absolute inset-0">
-          <span className="font-sans font-light text-[var(--text-muted)]">
-            {ampersand}
-          </span>
-          <span className="font-serif italic font-normal text-[var(--text-primary)] serif-luminance tracking-[-0.015em]">
-            {rest}
-          </span>
+        <span aria-hidden="true">
+          {words.map((word, wIdx) => {
+            const wordStart = runningIdx
+            runningIdx += word.length + 1
+            const isAmpersand = word === "&"
+
+            return (
+              <span key={`${word}-${wIdx}`}>
+                <span
+                  className={
+                    isAmpersand
+                      ? "inline-block whitespace-nowrap font-sans font-light text-[var(--text-muted)]"
+                      : "inline-block whitespace-nowrap font-serif italic font-normal text-[var(--text-primary)] serif-luminance tracking-[-0.015em]"
+                  }
+                >
+                  {word.split("").map((char, cIdx) => {
+                    const globalIdx = wordStart + cIdx
+                    const isLocked = globalIdx < revealedCount
+                    const shown = isLocked ? char : (scrambleChars[globalIdx] ?? char)
+
+                    return (
+                      <span
+                        key={cIdx}
+                        className="relative inline-block align-baseline"
+                      >
+                        <span className={isLocked ? "" : "invisible select-none"}>
+                          {char}
+                        </span>
+                        {!isLocked && (
+                          <span className="absolute inset-0 flex items-center justify-center font-mono not-italic text-[0.58em] leading-none text-[var(--accent-primary)]/85 select-none">
+                            {shown}
+                          </span>
+                        )}
+                      </span>
+                    )
+                  })}
+                </span>
+                {wIdx < words.length - 1 ? " " : null}
+              </span>
+            )
+          })}
         </span>
       </span>
     )
@@ -148,7 +166,7 @@ function DecryptedText({ text }: { text: string }) {
   return (
     <>
       <span className="sr-only">{text}</span>
-      <span aria-hidden="true">{displayText}</span>
+      <span aria-hidden="true">{scrambleChars.join("")}</span>
     </>
   )
 }
