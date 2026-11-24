@@ -25,12 +25,23 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [activeId, setActiveId] = useState<SectionId>("")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isLightAttempt, setIsLightAttempt] = useState(false)
+  const [theme, setTheme] = useState<"dark" | "light">("dark")
 
-  const themeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const menuTriggerRef = useRef<HTMLButtonElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
   const wasOpenRef = useRef(false)
+
+  // Hydrate saved theme preference on mount
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem("youssef-theme")
+      if (saved === "light" || saved === "dark") {
+        setTheme(saved)
+        document.documentElement.classList.toggle("light", saved === "light")
+        document.documentElement.classList.toggle("dark", saved === "dark")
+      }
+    } catch {}
+  }, [])
 
   // Morph navbar on scroll (> 64px) & handle top/bottom edge active states
   useEffect(() => {
@@ -85,13 +96,6 @@ export default function Navbar() {
     return () => observer.disconnect()
   }, [])
 
-  // Cleanup theme-lock timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (themeTimerRef.current) clearTimeout(themeTimerRef.current)
-    }
-  }, [])
-
   // Accessible mobile drawer: Escape close, body scroll lock, focus management, desktop resize close
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -130,20 +134,27 @@ export default function Navbar() {
     }
   }, [mobileMenuOpen])
 
-  // Youssef's Dark-Mode Lock Easter Egg
+  // Toggle between Dark (Obsidian & Glacial Verdigris) and Light (Architectural Alabaster & Deep Verdigris)
   const handleThemeToggle = useCallback(() => {
-    if (themeTimerRef.current) {
-      clearTimeout(themeTimerRef.current)
-    }
-    setIsLightAttempt(true)
-    toast.error("System Override Prevented", {
-      description:
-        "Dark mode is strictly enforced for optimal security visibility.",
-      duration: 3000,
+    setTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark"
+      document.documentElement.classList.toggle("light", next === "light")
+      document.documentElement.classList.toggle("dark", next === "dark")
+      try {
+        window.localStorage.setItem("youssef-theme", next)
+      } catch {}
+      toast.success(
+        next === "light" ? "Light Mode Enabled" : "Dark Mode Enabled",
+        {
+          description:
+            next === "light"
+              ? "Architectural Alabaster & Deep Verdigris palette active."
+              : "Obsidian & Glacial Verdigris palette active.",
+          duration: 2200,
+        }
+      )
+      return next
     })
-    themeTimerRef.current = setTimeout(() => {
-      setIsLightAttempt(false)
-    }, 1500)
   }, [])
 
   return (
@@ -161,7 +172,7 @@ export default function Navbar() {
           className={cn(
             "pointer-events-auto mx-auto w-full flex items-center justify-between transition-[max-width,height,padding,background-color,border-color,border-radius,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
             scrolled
-              ? "max-w-[880px] h-[56px] px-3.5 sm:px-5 rounded-xl bg-[#0D1216]/88 backdrop-blur-md border border-[var(--border-strong)] shadow-[0_14px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(240,244,242,0.06)]"
+              ? "max-w-[880px] h-[56px] px-3.5 sm:px-5 rounded-xl bg-[var(--bg-surface)]/88 [.light_&]:bg-[var(--bg-surface)]/96 backdrop-blur-md border border-[var(--border-strong)] shadow-[0_14px_40px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(240,244,242,0.06)] [.light_&]:shadow-[0_12px_36px_rgba(11,19,17,0.08)]"
               : "max-w-[1380px] h-[70px] px-2 sm:px-4 rounded-2xl bg-transparent border border-transparent shadow-none"
           )}
         >
@@ -207,17 +218,21 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Right: Dark-Mode Lock + Get in Touch CTA + Mobile Drawer Trigger */}
+          {/* Right: Theme Toggle + Get in Touch CTA + Mobile Drawer Trigger */}
           <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
             <button
               type="button"
               onClick={handleThemeToggle}
-              aria-label="Toggle color theme"
-              title="Dark mode enforced"
+              aria-label={
+                theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+              }
+              title={
+                theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+              }
               className="relative flex items-center justify-center w-10 h-10 rounded-lg border border-transparent hover:border-[var(--border-subtle)] hover:bg-[var(--bg-elevated)]/80 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-all duration-200 active:scale-[0.95] cursor-pointer"
             >
               <AnimatePresence mode="wait" initial={false}>
-                {isLightAttempt ? (
+                {theme === "light" ? (
                   <motion.span
                     key="sun"
                     initial={{ scale: 0.75, opacity: 0, rotate: -35 }}
@@ -249,7 +264,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={() => setActiveId("contact")}
-              className="group hidden lg:inline-flex items-center justify-center h-9 px-4 rounded-lg bg-[var(--surface-platinum)] text-[var(--ink-dark)] text-[12px] font-medium tracking-[-0.01em] hover:bg-white transition-all duration-200 active:scale-[0.97] shadow-[0_2px_10px_rgba(0,0,0,0.28)]"
+              className="group hidden lg:inline-flex items-center justify-center h-9 px-4 rounded-lg bg-[var(--surface-platinum)] text-[var(--ink-dark)] text-[12px] font-medium tracking-[-0.01em] hover:opacity-90 transition-all duration-200 active:scale-[0.97] shadow-[0_2px_10px_rgba(0,0,0,0.18)]"
             >
               <SlotText text="Get in Touch" />
             </a>
@@ -263,7 +278,7 @@ export default function Navbar() {
               aria-label={
                 mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"
               }
-              className="lg:hidden flex items-center justify-center w-11 h-11 rounded-lg border border-[var(--border-subtle)] bg-[#0D1216]/75 text-[var(--text-primary)] hover:border-[var(--border-accent)] hover:text-[var(--accent-primary)] transition-all duration-200 active:scale-[0.95] cursor-pointer"
+              className="lg:hidden flex items-center justify-center w-11 h-11 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 text-[var(--text-primary)] hover:border-[var(--border-accent)] hover:text-[var(--accent-primary)] transition-all duration-200 active:scale-[0.95] cursor-pointer"
             >
               <Menu className="w-5 h-5" aria-hidden="true" />
             </button>
@@ -283,7 +298,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.24, ease: ease.out }}
-            className="fixed inset-0 z-[60] lg:hidden bg-[#06090B]/95 backdrop-blur-xl flex flex-col justify-between px-6 py-6 overflow-y-auto"
+            className="fixed inset-0 z-[60] lg:hidden bg-[var(--bg-deep)]/95 backdrop-blur-xl flex flex-col justify-between px-6 py-6 overflow-y-auto"
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-5">

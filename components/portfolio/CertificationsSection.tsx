@@ -137,7 +137,7 @@ export default function CertificationsSection() {
             </h2>
           </div>
 
-          <div className="inline-flex items-center gap-2.5 self-start lg:self-end px-4 py-2 rounded-full bg-[var(--bg-surface)] border border-[var(--border-strong)] shadow-[inset_0_1px_0_rgba(240,244,242,0.05)]">
+          <div className="inline-flex items-center gap-2.5 self-start lg:self-end px-4 py-2 rounded-full bg-[var(--bg-surface)] border border-[var(--border-strong)] shadow-[inset_0_1px_0_rgba(240,244,242,0.05)] [.light_&]:shadow-[0_8px_24px_rgba(11,19,17,0.06)]">
             <ShieldCheck
               className="w-4 h-4 text-[var(--accent-primary)] shrink-0"
               strokeWidth={1.75}
@@ -238,7 +238,7 @@ export default function CertificationsSection() {
                   </span>
                 </div>
 
-                <h3 className="text-base sm:text-lg font-medium text-[var(--text-primary)] tracking-[-0.01em] leading-snug group-hover:text-white transition-colors">
+                <h3 className="text-base sm:text-lg font-medium text-[var(--text-primary)] tracking-[-0.01em] leading-snug group-hover:text-white [.light_&]:group-hover:text-[var(--accent-primary)] transition-colors">
                   {cert.name}
                 </h3>
 
@@ -349,7 +349,7 @@ export default function CertificationsSection() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
                 onClick={() => setPreviewCert(null)}
-                className="fixed inset-0 z-[90] flex items-center justify-center p-4 sm:p-6 bg-[#06090B]/85 backdrop-blur-md"
+                className="fixed inset-0 z-[90] flex items-center justify-center p-4 sm:p-6 bg-[var(--bg-deep)]/85 backdrop-blur-md"
               >
                 <motion.div
                   role="dialog"
@@ -368,7 +368,7 @@ export default function CertificationsSection() {
                   }
                   transition={prefersReducedMotion ? { duration: 0 } : spring.crisp}
                   onClick={(event) => event.stopPropagation()}
-                  className="w-full max-w-5xl max-h-[92vh] flex flex-col rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-strong)] shadow-[0_32px_90px_rgba(0,0,0,0.75)] overflow-hidden"
+                  className="w-full max-w-5xl max-h-[92vh] flex flex-col rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-strong)] shadow-[0_32px_90px_rgba(0,0,0,0.75)] [.light_&]:shadow-[0_20px_50px_rgba(11,19,17,0.12)] overflow-hidden"
                 >
                   {/* Modal Header */}
                   <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-[var(--border-subtle)] bg-[var(--bg-deep)]/65 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
@@ -437,13 +437,13 @@ export default function CertificationsSection() {
                   </div>
 
                   {/* Modal Body */}
-                  <div className="p-4 sm:p-6 overflow-y-auto flex-1 bg-[#070B0E]">
+                  <div className="p-4 sm:p-6 overflow-y-auto flex-1 bg-[var(--bg-elevated)]">
                     {previewCert.assetType === "image" ? (
                       <div className="flex flex-col items-center gap-4">
                         <img
                           src={encodeURI(previewCert.assetPath)}
                           alt={previewCert.name}
-                          className="max-h-[70vh] w-auto mx-auto rounded-lg object-contain border border-[var(--border-subtle)] bg-[#0A0F12]"
+                          className="max-h-[70vh] w-auto mx-auto rounded-lg object-contain border border-[var(--border-subtle)] bg-[var(--bg-surface)]"
                         />
                       </div>
                     ) : (
@@ -451,7 +451,7 @@ export default function CertificationsSection() {
                         <iframe
                           src={`${encodeURI(previewCert.assetPath)}#toolbar=0&navpanes=0&view=FitH`}
                           title={previewCert.name}
-                          className="w-full h-[64vh] sm:h-[68vh] rounded-lg bg-[#0A0F12] border border-[var(--border-subtle)]"
+                          className="w-full h-[64vh] sm:h-[68vh] rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]"
                         />
                         <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-2.5 rounded-lg bg-[var(--bg-surface)]/75 border border-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
                           <span>

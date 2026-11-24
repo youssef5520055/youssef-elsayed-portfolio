@@ -106,7 +106,7 @@ export default function ExperienceSection() {
                 {/* Col 4–12: Role/Degree, Organization, Summary, Highlights & Tags */}
                 <div className="lg:col-span-9 flex flex-col gap-5">
                   <div>
-                    <h3 className="text-2xl sm:text-[1.75rem] font-semibold text-[var(--text-primary)] tracking-[-0.02em] leading-snug group-hover:text-white transition-colors">
+                    <h3 className="text-2xl sm:text-[1.75rem] font-semibold text-[var(--text-primary)] tracking-[-0.02em] leading-snug group-hover:text-white [.light_&]:group-hover:text-[var(--accent-primary)] transition-colors">
                       {item.title}
                     </h3>
                     <p className="text-sm sm:text-[15px] font-medium text-[var(--text-secondary)] mt-1">

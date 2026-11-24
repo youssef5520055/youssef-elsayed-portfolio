@@ -126,7 +126,7 @@ export default function SkillsSection() {
                   "group relative text-left rounded-2xl border p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 min-h-[320px]",
                   isActive
                     ? "bg-gradient-to-br from-[#0F735F] via-[#0A5243] to-[#07362C] border-[#26D0A8]/45 text-[#F0F4F2] shadow-[0_20px_50px_rgba(10,82,67,0.35)]"
-                    : "bg-[var(--bg-surface)] border-[var(--border-subtle)] hover:border-[var(--border-strong)] hover:bg-[var(--bg-elevated)]/60 text-[var(--text-primary)]"
+                    : "bg-[var(--bg-surface)] border-[var(--border-subtle)] hover:border-[var(--border-strong)] hover:bg-[var(--bg-elevated)]/60 text-[var(--text-primary)] [.light_&]:shadow-[0_12px_32px_rgba(11,19,17,0.06)]"
                 )}
               >
                 <div>
@@ -148,7 +148,7 @@ export default function SkillsSection() {
                       className={cn(
                         "w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200",
                         isActive
-                          ? "bg-[var(--surface-platinum)] text-[var(--ink-dark)] shadow-sm"
+                          ? "bg-[#E4EAE7] text-[#0B1114] shadow-sm"
                           : "border border-[var(--border-strong)] text-[var(--text-secondary)] group-hover:border-[var(--accent-primary)]/60 group-hover:text-[var(--accent-primary)]"
                       )}
                     >
@@ -157,7 +157,12 @@ export default function SkillsSection() {
                   </div>
 
                   {/* Interactive Card Trigger + Semantic Heading (valid HTML5 stretched-button pattern) */}
-                  <h3 className="text-xl font-semibold tracking-[-0.015em] leading-snug mb-3 text-[#F0F4F2]">
+                  <h3
+                    className={cn(
+                      "text-xl font-semibold tracking-[-0.015em] leading-snug mb-3 transition-colors",
+                      isActive ? "text-[#F0F4F2]" : "text-[var(--text-primary)]"
+                    )}
+                  >
                     <button
                       type="button"
                       onClick={() => setActiveCardId(card.id)}
@@ -204,7 +209,7 @@ export default function SkillsSection() {
                         className={cn(
                           "w-1.5 h-1.5 rounded-full mt-1.5 shrink-0",
                           isActive
-                            ? "bg-[var(--surface-platinum)]"
+                            ? "bg-[#E4EAE7]"
                             : "bg-[var(--accent-primary)]"
                         )}
                       />
@@ -248,7 +253,7 @@ export default function SkillsSection() {
                     className={cn(
                       "relative px-3.5 py-2 rounded-xl text-xs font-mono transition-colors cursor-pointer flex items-center gap-2 min-h-[40px] border",
                       isSelected
-                        ? "border-[var(--border-accent)] text-[#F0F4F2]"
+                        ? "border-[var(--border-accent)] text-[var(--text-primary)]"
                         : "bg-[var(--bg-surface)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-strong)]"
                     )}
                   >
@@ -265,7 +270,7 @@ export default function SkillsSection() {
                       className={cn(
                         "relative z-10 text-[10px] tabular-nums px-1.5 py-0.5 rounded-md",
                         isSelected
-                          ? "bg-[#06090B]/40 text-[var(--accent-primary)]"
+                          ? "bg-[var(--bg-deep)]/60 text-[var(--accent-primary)]"
                           : "bg-[var(--bg-elevated)] text-[var(--text-muted)]"
                       )}
                     >
@@ -296,7 +301,7 @@ export default function SkillsSection() {
                       : { opacity: 0, y: 8 }
                   }
                   transition={{ duration: 0.24, ease: ease.editorial }}
-                  className="group rounded-2xl bg-[var(--bg-surface)]/90 border border-[var(--border-subtle)] hover:border-[var(--border-strong)] p-6 flex flex-col transition-colors duration-200"
+                  className="group rounded-2xl bg-[var(--bg-surface)]/90 border border-[var(--border-subtle)] hover:border-[var(--border-strong)] p-6 flex flex-col transition-colors duration-200 [.light_&]:shadow-[0_12px_32px_rgba(11,19,17,0.06)]"
                 >
                   {/* Category Header + Hairline Rule */}
                   <div className="flex items-center justify-between gap-3 pb-4 mb-5 border-b border-[var(--border-subtle)]">

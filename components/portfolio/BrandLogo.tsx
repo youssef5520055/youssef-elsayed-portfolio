@@ -27,8 +27,8 @@ export function BrandMark({ className, size = 36 }: BrandMarkProps) {
         width="45"
         height="45"
         rx="10"
-        fill="#0B1114"
-        stroke="#F0F4F2"
+        fill="var(--bg-surface)"
+        stroke="var(--text-primary)"
         strokeOpacity="0.22"
         strokeWidth="1.25"
       />
@@ -39,30 +39,30 @@ export function BrandMark({ className, size = 36 }: BrandMarkProps) {
         width="38"
         height="38"
         rx="7"
-        stroke="#26D0A8"
-        strokeOpacity="0.32"
+        stroke="var(--accent-primary)"
+        strokeOpacity="0.35"
         strokeWidth="0.9"
       />
       {/* Subtle corner crest diamond top-right */}
       <path
         d="M38.5 8.5L40 10L38.5 11.5L37 10L38.5 8.5Z"
-        fill="#26D0A8"
-        fillOpacity="0.85"
+        fill="var(--accent-primary)"
+        fillOpacity="0.88"
       />
 
-      {/* Classic Serif-Inspired Y (Alabaster) */}
+      {/* Classic Serif-Inspired Y */}
       <path
         d="M12.5 14.5H16.5M22.5 14.5H26.2M14.5 14.5L19.4 23.6L24.3 14.5M19.4 23.6V33.5M16.7 33.5H22.1"
-        stroke="#F0F4F2"
+        stroke="var(--text-primary)"
         strokeWidth="2.1"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
 
-      {/* Classic Serif-Inspired E (Glacial Verdigris) */}
+      {/* Classic Serif-Inspired E */}
       <path
         d="M28 14.5H35.6M28 14.5V33.5M28 23.8H34.1M28 33.5H35.8M35.6 14.5V16.4M35.8 33.5V31.6"
-        stroke="#26D0A8"
+        stroke="var(--accent-primary)"
         strokeWidth="2.1"
         strokeLinecap="round"
         strokeLinejoin="round"

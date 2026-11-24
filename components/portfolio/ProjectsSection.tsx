@@ -1310,7 +1310,7 @@ export default function ProjectsSection() {
                             layoutId="active-project-surface"
                             transition={spring.layout}
                             aria-hidden="true"
-                            className="absolute inset-0 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-accent)]/60 shadow-[0_12px_30px_rgba(0,0,0,0.3)]"
+                            className="absolute inset-0 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-accent)]/60 shadow-[0_12px_30px_rgba(0,0,0,0.3)] [.light_&]:shadow-[0_10px_26px_rgba(11,19,17,0.07)]"
                           />
                         )}
 
@@ -1335,7 +1335,7 @@ export default function ProjectsSection() {
                             className={cn(
                               "block text-[17px] font-semibold leading-snug tracking-[-0.01em] transition-colors",
                               isActive
-                                ? "text-[#F0F4F2]"
+                                ? "text-[var(--text-primary)]"
                                 : "text-[var(--text-muted)] group-hover:text-[var(--text-primary)]"
                             )}
                           >
@@ -1362,7 +1362,7 @@ export default function ProjectsSection() {
 
             {/* Right Framed Architectural Showcase Stage */}
             <div className="lg:col-span-7">
-              <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+              <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.45)] [.light_&]:shadow-[0_20px_50px_rgba(11,19,17,0.08)]">
                 <AnimatePresence mode="wait">
                   <motion.article
                     key={activeProject.id}
@@ -1384,7 +1384,7 @@ export default function ProjectsSection() {
                       <ProjectSchematic type={activeProject.visualType} />
 
                       {/* Top-left ID badge */}
-                      <div className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 z-10 inline-flex items-center gap-2 rounded-md bg-[#06090B]/85 backdrop-blur-md border border-[var(--border-strong)] px-3 py-1 font-mono text-[11px] tracking-[0.14em] text-[var(--text-primary)]">
+                      <div className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 z-10 inline-flex items-center gap-2 rounded-md bg-[var(--bg-surface)]/88 backdrop-blur-md border border-[var(--border-strong)] px-3 py-1 font-mono text-[11px] tracking-[0.14em] text-[var(--text-primary)]">
                         <Terminal
                           className="w-3 h-3 text-[var(--accent-primary)]"
                           aria-hidden="true"
@@ -1393,7 +1393,7 @@ export default function ProjectsSection() {
                       </div>
 
                       {/* Top-right Live Category Pill */}
-                      <div className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-10 inline-flex items-center gap-2 rounded-full bg-[#06090B]/85 backdrop-blur-md border border-[var(--border-strong)] px-3 py-1 font-mono text-[11px] tracking-[0.08em] text-[var(--text-primary)]">
+                      <div className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-10 inline-flex items-center gap-2 rounded-full bg-[var(--bg-surface)]/88 backdrop-blur-md border border-[var(--border-strong)] px-3 py-1 font-mono text-[11px] tracking-[0.08em] text-[var(--text-primary)]">
                         <span
                           aria-hidden="true"
                           className={cn(
@@ -1475,7 +1475,7 @@ export default function ProjectsSection() {
                           href={activeProject.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group inline-flex items-center gap-2.5 rounded-xl bg-[var(--surface-platinum)] text-[var(--ink-dark)] hover:bg-[#F0F4F2] px-5 py-3 text-sm font-medium active:scale-[0.98] transition-all cursor-pointer"
+                          className="group inline-flex items-center gap-2.5 rounded-xl bg-[var(--surface-platinum)] text-[var(--ink-dark)] hover:opacity-92 px-5 py-3 text-sm font-medium active:scale-[0.98] transition-all cursor-pointer"
                         >
                           <Github className="w-4 h-4 shrink-0" aria-hidden="true" />
                           <SlotText

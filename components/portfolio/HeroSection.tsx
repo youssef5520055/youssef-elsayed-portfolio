@@ -178,16 +178,16 @@ export default function HeroSection() {
 
   return (
     <div id="top" className="relative p-3 sm:p-5 lg:p-6 bg-[var(--bg-deep)]">
-      <div className="relative rounded-2xl sm:rounded-[24px] overflow-hidden border border-[var(--border-subtle)] min-h-[calc(100svh-24px)] sm:min-h-[calc(100svh-40px)] lg:min-h-[calc(100svh-48px)] flex flex-col bg-[var(--bg-deep)] shadow-[0_24px_80px_rgba(0,0,0,0.6)]">
+      <div className="relative rounded-2xl sm:rounded-[24px] overflow-hidden border border-[var(--border-subtle)] min-h-[calc(100svh-24px)] sm:min-h-[calc(100svh-40px)] lg:min-h-[calc(100svh-48px)] flex flex-col bg-[var(--bg-deep)] shadow-[0_24px_80px_rgba(0,0,0,0.6)] [.light_&]:shadow-[0_20px_60px_rgba(11,19,17,0.08)]">
         <HeroAsciiOne className="flex-1 justify-between">
           {/* Multi-layered readability scrim: protects left editorial copy without obscuring right ASCII figure */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#06090B]/88 via-[#06090B]/45 to-transparent"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[var(--bg-deep)]/90 via-[var(--bg-deep)]/48 to-transparent"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#06090B]/80 via-transparent to-[#06090B]/35"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--bg-deep)]/82 via-transparent to-[var(--bg-deep)]/35"
           />
 
           {/* Main Inset Hero Grid */}
@@ -207,7 +207,7 @@ export default function HeroSection() {
                     target={item.external ? "_blank" : undefined}
                     rel={item.external ? "noopener noreferrer" : undefined}
                     aria-label={item.ariaLabel}
-                    className="group relative flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 min-h-[50px] sm:min-h-0 sm:h-10 px-1.5 sm:px-3.5 rounded-xl border border-[var(--border-subtle)] bg-[#0D1216]/72 backdrop-blur-md hover:border-[var(--border-accent)] hover:bg-[#141C21]/90 hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-200 cursor-pointer shadow-[inset_0_1px_0_rgba(240,244,242,0.04)]"
+                    className="group relative flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 min-h-[50px] sm:min-h-0 sm:h-10 px-1.5 sm:px-3.5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/78 backdrop-blur-md hover:border-[var(--border-accent)] hover:bg-[var(--bg-elevated)]/95 hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-200 cursor-pointer shadow-[inset_0_1px_0_rgba(240,244,242,0.04)]"
                   >
                     <item.icon
                       className="w-3.5 h-3.5 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] transition-colors shrink-0"
@@ -287,7 +287,7 @@ export default function HeroSection() {
               >
                 <a
                   href="#projects"
-                  className="group inline-flex items-center justify-center gap-2.5 h-12 px-6 rounded-xl bg-[var(--surface-platinum)] text-[var(--ink-dark)] text-[13px] font-medium tracking-[-0.01em] hover:bg-white transition-all duration-200 active:scale-[0.97] shadow-[0_10px_28px_rgba(0,0,0,0.4)] cursor-pointer"
+                  className="group inline-flex items-center justify-center gap-2.5 h-12 px-6 rounded-xl bg-[var(--surface-platinum)] text-[var(--ink-dark)] text-[13px] font-medium tracking-[-0.01em] hover:opacity-92 transition-all duration-200 active:scale-[0.97] shadow-[0_10px_28px_rgba(0,0,0,0.4)] [.light_&]:shadow-[0_10px_24px_rgba(11,19,17,0.16)] cursor-pointer"
                 >
                   <SlotText text="View Projects" />
                   <ArrowRight
@@ -298,7 +298,7 @@ export default function HeroSection() {
 
                 <a
                   href={IDENTITY.emailHref}
-                  className="group inline-flex items-center justify-center gap-2.5 h-12 px-6 rounded-xl border border-[var(--border-strong)] bg-[#0D1216]/65 backdrop-blur-md text-[var(--text-primary)] text-[13px] font-medium tracking-[-0.01em] hover:border-[var(--border-accent)] hover:bg-[#141C21]/88 transition-all duration-200 active:scale-[0.97] cursor-pointer"
+                  className="group inline-flex items-center justify-center gap-2.5 h-12 px-6 rounded-xl border border-[var(--border-strong)] bg-[var(--bg-surface)]/75 backdrop-blur-md text-[var(--text-primary)] text-[13px] font-medium tracking-[-0.01em] hover:border-[var(--border-accent)] hover:bg-[var(--bg-elevated)]/95 transition-all duration-200 active:scale-[0.97] cursor-pointer"
                 >
                   <SlotText text="Contact Me" />
                 </a>

@@ -143,14 +143,14 @@ export default function HeroAsciiOne({
       ref={hostRef}
       aria-label="Hero introduction with interactive ASCII Atlas visual"
       className={cn(
-        "relative isolate w-full overflow-hidden flex flex-col bg-[#06090B]",
+        "relative isolate w-full overflow-hidden flex flex-col bg-[var(--bg-deep)] transition-colors duration-300",
         className
       )}
     >
       {/* Subtle Ambient Star/Dot Backdrop across entire Hero */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-30"
+        className="pointer-events-none absolute inset-0 opacity-30 [.light_&]:invert [.light_&]:opacity-20"
         style={{
           backgroundImage: `
             radial-gradient(1px 1px at 18% 26%, rgba(240,244,242,0.85), transparent),
@@ -176,7 +176,7 @@ export default function HeroAsciiOne({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
         <div
-          className="absolute inset-y-0 w-full h-full translate-x-[24%] sm:translate-x-[34%] lg:translate-x-[47%] opacity-65 sm:opacity-80 lg:opacity-95"
+          className="ascii-atlas-stage absolute inset-y-0 w-full h-full translate-x-[24%] sm:translate-x-[34%] lg:translate-x-[47%] opacity-65 sm:opacity-80 lg:opacity-95"
           style={{
             WebkitMaskImage:
               "linear-gradient(to right, transparent 0%, black 12%, black 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 8%, black 90%, transparent 100%)",

@@ -86,13 +86,12 @@ export default function RootLayout({
         </a>
         <MotionProvider>{children}</MotionProvider>
         <Toaster
-          theme="dark"
           position="bottom-right"
           toastOptions={{
             style: {
-              background: "#0D1216",
-              border: "1px solid rgba(240, 244, 242, 0.14)",
-              color: "#F0F4F2",
+              background: "var(--bg-surface)",
+              border: "1px solid var(--border-strong)",
+              color: "var(--text-primary)",
             },
           }}
         />

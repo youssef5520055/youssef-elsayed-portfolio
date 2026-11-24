@@ -168,13 +168,13 @@ export default function ContactDeckSection() {
             className="lg:col-span-6 flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-0 py-2 sm:py-6"
           >
             {/* Card 1: Personal Portrait Card */}
-            <div className="relative z-10 w-full max-w-[320px] sm:w-[272px] xl:w-[292px] sm:-mr-3 sm:-rotate-3 sm:hover:rotate-0 sm:hover:-translate-y-2 hover:z-20 motion-reduce:rotate-0 motion-reduce:hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] bg-gradient-to-b from-[#172127] to-[#0D1216] border border-[var(--border-strong)] rounded-2xl p-6 sm:p-7 flex flex-col items-center text-center shadow-[0_24px_60px_rgba(0,0,0,0.55)]">
+            <div className="relative z-10 w-full max-w-[320px] sm:w-[272px] xl:w-[292px] sm:-mr-3 sm:-rotate-3 sm:hover:rotate-0 sm:hover:-translate-y-2 hover:z-20 motion-reduce:rotate-0 motion-reduce:hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] bg-gradient-to-b from-[#172127] to-[#0D1216] [.light_&]:from-[#FFFFFF] [.light_&]:to-[#EBF2F0] border border-[var(--border-strong)] rounded-2xl p-6 sm:p-7 flex flex-col items-center text-center shadow-[0_24px_60px_rgba(0,0,0,0.55)] [.light_&]:shadow-[0_20px_50px_rgba(11,19,17,0.09)]">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
               />
 
-              <div className="w-24 h-24 rounded-full overflow-hidden ring-4 ring-[var(--accent-primary)]/25 bg-[var(--accent-deep)] shrink-0 shadow-[0_12px_28px_rgba(0,0,0,0.45)]">
+              <div className="w-24 h-24 rounded-full overflow-hidden ring-4 ring-[var(--accent-primary)]/25 bg-[var(--accent-deep)] shrink-0 shadow-[0_12px_28px_rgba(0,0,0,0.45)] [.light_&]:shadow-[0_10px_24px_rgba(11,19,17,0.12)]">
                 <img
                   src="/profile.jpg"
                   alt="Youssef Elsayed"
@@ -195,7 +195,7 @@ export default function ContactDeckSection() {
               <div className="grid grid-cols-2 gap-2.5 w-full mt-6 pt-5 border-t border-[var(--border-subtle)]">
                 <a
                   href={IDENTITY.emailHref}
-                  className="h-10 rounded-xl bg-[var(--surface-platinum)] text-[var(--ink-dark)] hover:bg-white font-medium text-xs inline-flex items-center justify-center gap-1.5 transition-all active:scale-[0.97]"
+                  className="h-10 rounded-xl bg-[var(--surface-platinum)] text-[var(--ink-dark)] hover:opacity-90 font-medium text-xs inline-flex items-center justify-center gap-1.5 transition-all active:scale-[0.97]"
                 >
                   <Mail className="w-3.5 h-3.5 shrink-0" strokeWidth={1.85} aria-hidden="true" />
                   <span>Email</span>
@@ -227,7 +227,7 @@ export default function ContactDeckSection() {
             </div>
 
             {/* Card 2: YE Connect Card */}
-            <div className="relative z-10 w-full max-w-[320px] sm:w-[272px] xl:w-[292px] sm:-ml-3 sm:mt-8 sm:rotate-3 sm:hover:rotate-0 sm:hover:-translate-y-2 hover:z-20 motion-reduce:rotate-0 motion-reduce:hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] bg-gradient-to-b from-[#122622] to-[#0A1315] border border-[var(--border-accent)] rounded-2xl p-6 sm:p-7 flex flex-col items-center text-center shadow-[0_24px_60px_rgba(0,0,0,0.55)]">
+            <div className="relative z-10 w-full max-w-[320px] sm:w-[272px] xl:w-[292px] sm:-ml-3 sm:mt-8 sm:rotate-3 sm:hover:rotate-0 sm:hover:-translate-y-2 hover:z-20 motion-reduce:rotate-0 motion-reduce:hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] bg-gradient-to-b from-[#122622] to-[#0A1315] [.light_&]:from-[#E5F4F0] [.light_&]:to-[#D3ECE5] border border-[var(--border-accent)] rounded-2xl p-6 sm:p-7 flex flex-col items-center text-center shadow-[0_24px_60px_rgba(0,0,0,0.55)] [.light_&]:shadow-[0_20px_50px_rgba(10,123,97,0.12)]">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-primary)]/45 to-transparent"
@@ -235,7 +235,7 @@ export default function ContactDeckSection() {
 
               <div
                 aria-hidden="true"
-                className="w-24 h-24 rounded-full bg-[var(--accent-deep)]/65 ring-4 ring-[var(--accent-primary)]/25 flex items-center justify-center shrink-0 shadow-[inset_0_1px_0_rgba(240,244,242,0.18),0_12px_28px_rgba(0,0,0,0.45)]"
+                className="w-24 h-24 rounded-full bg-[var(--accent-deep)]/65 ring-4 ring-[var(--accent-primary)]/25 flex items-center justify-center shrink-0 shadow-[inset_0_1px_0_rgba(240,244,242,0.18),0_12px_28px_rgba(0,0,0,0.45)] [.light_&]:shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_10px_24px_rgba(10,123,97,0.12)]"
               >
                 <BrandMark size={62} />
               </div>
@@ -255,7 +255,7 @@ export default function ContactDeckSection() {
                   href={IDENTITY.whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-10 rounded-xl bg-[var(--accent-primary)] text-[var(--ink-dark)] hover:bg-[#34DFB7] font-medium text-xs inline-flex items-center justify-center gap-1.5 transition-all active:scale-[0.97]"
+                  className="h-10 rounded-xl bg-[var(--accent-primary)] text-[var(--ink-dark)] hover:bg-[#34DFB7] [.light_&]:hover:bg-[#086650] font-medium text-xs inline-flex items-center justify-center gap-1.5 transition-all active:scale-[0.97]"
                 >
                   <MessageCircle
                     className="w-3.5 h-3.5 shrink-0"

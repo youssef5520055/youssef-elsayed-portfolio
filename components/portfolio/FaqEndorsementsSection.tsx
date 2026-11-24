@@ -166,7 +166,7 @@ export default function FaqEndorsementsSection() {
               duration: prefersReducedMotion ? 0 : 0.5,
               ease: ease.editorial,
             }}
-            className="mt-20 rounded-2xl border border-dashed border-[var(--accent-secondary)]/35 bg-[var(--bg-surface)]/55 p-6 sm:p-8 lg:p-10"
+            className="mt-20 rounded-2xl border border-dashed border-[var(--accent-secondary)]/35 bg-[var(--bg-surface)]/55 [.light_&]:bg-[var(--bg-surface)]/85 [.light_&]:shadow-[0_12px_32px_rgba(11,19,17,0.05)] p-6 sm:p-8 lg:p-10"
           >
             <div className="flex flex-col gap-3 max-w-3xl">
               <span className="inline-flex items-center gap-2 self-start px-3 py-1 rounded-full bg-[var(--accent-secondary)]/12 border border-[var(--accent-secondary)]/35 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--accent-secondary)]">
@@ -190,7 +190,7 @@ export default function FaqEndorsementsSection() {
               {ENDORSEMENTS_PLACEHOLDER.slots.map((slot) => (
                 <div
                   key={slot.role}
-                  className="rounded-xl border border-dashed border-[var(--border-strong)] bg-[var(--bg-deep)]/60 p-6 flex flex-col justify-between gap-6"
+                  className="rounded-xl border border-dashed border-[var(--border-strong)] bg-[var(--bg-deep)]/60 [.light_&]:bg-[var(--bg-elevated)]/55 p-6 flex flex-col justify-between gap-6"
                 >
                   <div className="flex flex-col gap-3">
                     <Quote

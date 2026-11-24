@@ -111,11 +111,7 @@ export default function FooterSection() {
     >
       {/* Framed Atmospheric Closing Panel */}
       <div
-        className="rounded-2xl sm:rounded-[28px] overflow-hidden border border-[var(--border-accent)]/40 relative shadow-[0_30px_90px_rgba(0,0,0,0.65)]"
-        style={{
-          backgroundImage:
-            "radial-gradient(65% 55% at 50% 85%, rgba(18, 126, 102, 0.38), transparent 70%), radial-gradient(50% 45% at 85% 20%, rgba(212, 163, 89, 0.12), transparent 65%), linear-gradient(180deg, #091013 0%, #0A2520 65%, #071916 100%)",
-        }}
+        className="rounded-2xl sm:rounded-[28px] overflow-hidden border border-[var(--border-accent)]/40 relative shadow-[0_30px_90px_rgba(0,0,0,0.65)] [.light_&]:shadow-[0_24px_60px_rgba(11,19,17,0.08)] bg-[radial-gradient(65%_55%_at_50%_85%,rgba(18,126,102,0.38),transparent_70%),radial-gradient(50%_45%_at_85%_20%,rgba(212,163,89,0.12),transparent_65%),linear-gradient(180deg,#091013_0%,#0A2520_65%,#071916_100%)] [.light_&]:!bg-[linear-gradient(180deg,#EDF5F2_0%,#DCEEE8_65%,#CEE7DF_100%)]"
       >
         {/* Subtle Dot Texture Overlay & Specular Top Rim */}
         <div
@@ -167,7 +163,7 @@ export default function FooterSection() {
                       "w-14 h-14 sm:w-16 sm:h-16 rounded-full border flex items-center justify-center transition-all duration-300",
                       showOptions
                         ? "bg-[var(--accent-primary)] border-[var(--accent-primary)] text-[var(--ink-dark)] shadow-[0_0_28px_rgba(38,208,168,0.35)]"
-                        : "border-[var(--border-strong)] bg-[#06090B]/55 backdrop-blur-sm text-[var(--text-secondary)] group-hover:bg-[var(--accent-primary)] group-hover:border-[var(--accent-primary)] group-hover:text-[var(--ink-dark)]"
+                        : "border-[var(--border-strong)] bg-[var(--bg-surface)]/80 backdrop-blur-sm text-[var(--text-secondary)] group-hover:bg-[var(--accent-primary)] group-hover:border-[var(--accent-primary)] group-hover:text-[var(--ink-dark)]"
                     )}
                   >
                     <ArrowRight
@@ -206,12 +202,12 @@ export default function FooterSection() {
                       }}
                       className="overflow-hidden w-full sm:w-auto"
                     >
-                      <div className="inline-flex flex-wrap items-center gap-2 p-2 rounded-2xl bg-[#06090B]/75 backdrop-blur-xl border border-[var(--border-strong)] shadow-[0_20px_50px_rgba(0,0,0,0.55)]">
+                      <div className="inline-flex flex-wrap items-center gap-2 p-2 rounded-2xl bg-[var(--bg-surface)]/92 backdrop-blur-xl border border-[var(--border-strong)] shadow-[0_20px_50px_rgba(0,0,0,0.55)] [.light_&]:shadow-[0_16px_40px_rgba(11,19,17,0.10)]">
                         <a
                           href={IDENTITY.whatsappHref}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-[var(--accent-primary)] text-[var(--ink-dark)] hover:bg-[#34DFB7] font-mono text-xs uppercase tracking-[0.12em] font-medium transition-all active:scale-[0.97]"
+                          className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-[var(--accent-primary)] text-[var(--ink-dark)] hover:bg-[#34DFB7] [.light_&]:hover:bg-[#086650] font-mono text-xs uppercase tracking-[0.12em] font-medium transition-all active:scale-[0.97]"
                         >
                           <MessageCircle
                             className="w-4 h-4 shrink-0"

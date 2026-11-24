@@ -28,7 +28,7 @@ function getPillarSurfaceClasses(tone: CapabilityPillar["tone"]) {
   switch (tone) {
     case "platinum":
       return {
-        card: "bg-gradient-to-br from-[#ECEFEB] via-[#DFE6E2] to-[#CDD6D1] text-[#0B1114] border border-white/60 shadow-[0_22px_54px_rgba(0,0,0,0.35)]",
+        card: "bg-gradient-to-br from-[#ECEFEB] via-[#DFE6E2] to-[#CDD6D1] text-[#0B1114] border border-white/60 [.light_&]:border-[var(--border-strong)] shadow-[0_22px_54px_rgba(0,0,0,0.35)] [.light_&]:shadow-[0_18px_44px_rgba(11,19,17,0.08)]",
         iconWrap: "bg-[#0B1114]/[0.08] border border-[#0B1114]/15 text-[#0B1114]",
         focusLabel: "text-[#0B1114]/70",
         number: "text-[#0B1114]/45",
@@ -53,7 +53,7 @@ function getPillarSurfaceClasses(tone: CapabilityPillar["tone"]) {
       }
     case "obsidian":
       return {
-        card: "bg-gradient-to-br from-[#192228] to-[#0D1216] text-[#F0F4F2] border border-[var(--border-strong)] shadow-[0_22px_54px_rgba(0,0,0,0.48),inset_0_1px_0_rgba(240,244,242,0.06)]",
+        card: "bg-gradient-to-br from-[#192228] to-[#0D1216] [.light_&]:from-[var(--bg-surface)] [.light_&]:to-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-strong)] shadow-[0_22px_54px_rgba(0,0,0,0.48),inset_0_1px_0_rgba(240,244,242,0.06)] [.light_&]:shadow-[0_18px_44px_rgba(11,19,17,0.08)]",
         iconWrap:
           "bg-[var(--accent-deep)]/45 border border-[var(--border-accent)] text-[var(--accent-primary)]",
         focusLabel: "text-[var(--accent-primary)]",
@@ -85,7 +85,7 @@ export default function AboutSection() {
             transition={{ duration: 0.65, ease: ease.editorial }}
             className="lg:col-span-5"
           >
-            <div className="group relative aspect-[4/5] w-full max-w-[440px] mx-auto lg:mx-0 rounded-[20px] p-1.5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--border-accent)]/60 transition-colors duration-500 shadow-[0_24px_64px_rgba(0,0,0,0.52)]">
+            <div className="group relative aspect-[4/5] w-full max-w-[440px] mx-auto lg:mx-0 rounded-[20px] p-1.5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--border-accent)]/60 transition-colors duration-500 shadow-[0_24px_64px_rgba(0,0,0,0.52)] [.light_&]:shadow-[0_20px_50px_rgba(11,19,17,0.1)]">
               <div className="relative w-full h-full overflow-hidden rounded-[14px] bg-[var(--bg-deep)]">
                 <Image
                   src="/profile.jpg"
@@ -96,16 +96,16 @@ export default function AboutSection() {
                   className="object-cover object-[50%_4%] scale-[1.04] contrast-[1.06] saturate-[0.82] brightness-[0.94] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:group-hover:scale-[1.07]"
                 />
 
-                {/* Bottom obsidian vignette for seamless integration & nameplate legibility */}
+                {/* Bottom vignette for seamless integration & nameplate legibility */}
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#06090B] via-[#06090B]/35 to-transparent"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--bg-deep)] via-[var(--bg-deep)]/35 to-transparent [.light_&]:from-[#0B1311]/45 [.light_&]:via-transparent"
                 />
 
                 {/* Studio radial edge fade so bright outdoor street edges recede cleanly */}
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0"
+                  className="pointer-events-none absolute inset-0 [.light_&]:opacity-35"
                   style={{
                     background:
                       "radial-gradient(ellipse 62% 58% at 50% 30%, transparent 36%, rgba(6, 9, 11, 0.55) 74%, rgba(6, 9, 11, 0.92) 100%)",
@@ -124,14 +124,14 @@ export default function AboutSection() {
                         "block w-[3px] rounded-full",
                         i === 5
                           ? "h-4 bg-[var(--accent-primary)] shadow-[0_0_8px_var(--accent-glow)]"
-                          : "h-1 bg-[var(--text-primary)]/45"
+                          : "h-1 bg-[var(--text-primary)]/45 [.light_&]:bg-white/75"
                       )}
                     />
                   ))}
                 </div>
 
                 {/* Bottom Frosted Nameplate with Handwritten Signature */}
-                <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5 z-10 rounded-xl bg-[#0D1216]/82 backdrop-blur-md border border-[var(--border-subtle)] px-5 py-4 shadow-[0_16px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(240,244,242,0.05)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:group-hover:-translate-y-1">
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5 z-10 rounded-xl bg-[var(--bg-surface)]/85 backdrop-blur-md border border-[var(--border-subtle)] px-5 py-4 shadow-[0_16px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(240,244,242,0.05)] [.light_&]:shadow-[0_14px_34px_rgba(11,19,17,0.14)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:group-hover:-translate-y-1">
                   <div className="mb-2.5">
                     <Signature
                       animated
@@ -193,7 +193,7 @@ export default function AboutSection() {
               <div className="flex flex-wrap items-center gap-3.5 pt-2">
                 <a
                   href="#projects"
-                  className="group inline-flex items-center justify-center gap-2.5 h-11 px-5 rounded-xl bg-[var(--surface-platinum)] text-[var(--ink-dark)] text-[13px] font-medium tracking-[-0.01em] hover:bg-white transition-all duration-200 active:scale-[0.97] cursor-pointer"
+                  className="group inline-flex items-center justify-center gap-2.5 h-11 px-5 rounded-xl bg-[var(--surface-platinum)] text-[var(--ink-dark)] text-[13px] font-medium tracking-[-0.01em] hover:opacity-92 transition-all duration-200 active:scale-[0.97] cursor-pointer"
                 >
                   <SlotText text="View Projects" />
                   <ArrowRight

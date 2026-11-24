@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Custom Obsidian & Glacial Verdigris Palette (WCAG AA/AAA Verified) */
+  /* Custom Obsidian & Glacial Verdigris Dark Palette (WCAG AA/AAA Verified) */
   --bg-deep: #06090B;
   --bg-surface: #0D1216;
   --bg-elevated: #141C21;
@@ -36,6 +36,38 @@
   --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
   --font-serif: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+}
+
+html.light {
+  /* Architectural Alabaster & Deep Verdigris Light Palette (WCAG AA/AAA Verified) */
+  --bg-deep: #F5F8F7;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #E9F0EE;
+  --bg-panel: #FFFFFF;
+  --bg-card: #FFFFFF;
+
+  --text-primary: #0B1311;
+  --text-secondary: #374843;
+  --text-muted: #586B65;
+
+  --accent-primary: #0A7B61;
+  --accent-deep: #D8EFE9;
+  --accent-glow: rgba(10, 123, 97, 0.18);
+  --accent-secondary: #9A6B22;
+  --surface-platinum: #0B1311;
+  --ink-dark: #F5F8F7;
+
+  --accent-cyan: #0A7B61;
+
+  --status-success: #059669;
+  --status-warning: #D97706;
+  --status-error: #DC2626;
+
+  --border-subtle: rgba(11, 19, 17, 0.09);
+  --border-strong: rgba(11, 19, 17, 0.18);
+  --border-accent: rgba(10, 123, 97, 0.35);
+
+  color-scheme: light;
 }
 
 @theme inline {
@@ -76,6 +108,7 @@
     color: var(--text-primary);
     scroll-behavior: smooth;
     color-scheme: dark;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   body {
@@ -84,11 +117,17 @@
     color: var(--text-primary);
     overflow-x: clip;
     caret-color: var(--accent-primary);
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   ::selection {
     background-color: rgba(38, 208, 168, 0.24);
     color: #F0F4F2;
+  }
+
+  html.light ::selection {
+    background-color: rgba(10, 123, 97, 0.18);
+    color: #0B1311;
   }
 
   :focus-visible {
@@ -105,15 +144,23 @@
   }
 }
 
-/* Editorial dot matrix inspired by Template 1 (Crimson) — re-tuned to Obsidian */
+/* Editorial dot matrix — adapts between dark and light themes */
 .editorial-dots {
   background-image: radial-gradient(rgba(240, 244, 242, 0.08) 1px, transparent 1.2px);
   background-size: 24px 24px;
 }
 
+html.light .editorial-dots {
+  background-image: radial-gradient(rgba(11, 19, 17, 0.09) 1px, transparent 1.2px);
+}
+
 /* Subtle mineral text luminosity for large serif headers */
 .serif-luminance {
   text-shadow: 0 0 24px rgba(240, 244, 242, 0.16);
+}
+
+html.light .serif-luminance {
+  text-shadow: none;
 }
 
 /* Glass / architectural surface */
@@ -123,6 +170,18 @@
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--border-subtle);
   box-shadow: inset 0 1px 0 rgba(240, 244, 242, 0.04);
+}
+
+html.light .surface-glass {
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 10px 30px rgba(11, 19, 17, 0.06);
+}
+
+/* Inverts white-on-black WebGL ASCII engraving into charcoal-ink-on-alabaster in Light Mode */
+html.light .ascii-atlas-stage {
+  filter: invert(1) contrast(2.25);
+  mix-blend-mode: multiply;
+  opacity: 0.92;
 }
 
 /* Vertical slot-roll hover micro-interaction (Template 1) */
@@ -174,7 +233,7 @@
   animation-play-state: paused;
 }
 
-/* Custom sleek dark scrollbar */
+/* Custom sleek scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -185,12 +244,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(240, 244, 242, 0.14);
+  background: var(--border-strong);
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(38, 208, 168, 0.45);
+  background: var(--accent-primary);
 }
 
 /* Tabular numbers utility */
