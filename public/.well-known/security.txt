@@ -1,0 +1,5 @@
+Contact: mailto:youssefelsayed5520055@gmail.com
+Expires: 2027-11-24T00:00:00.000Z
+Preferred-Languages: en, ar
+Canonical: https://youssef-elsayed-portfolio.vercel.app/.well-known/security.txt
+Policy: https://github.com/youssef5520055/youssef-elsayed-portfolio/blob/main/SECURITY.md

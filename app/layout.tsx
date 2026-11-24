@@ -19,8 +19,11 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 }
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://youssef-elsayed-portfolio.vercel.app"
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://youssefelsayed.com"),
+  metadataBase: new URL(SITE_URL),
   title: "Youssef Elsayed | Software Engineer & Cybersecurity Specialist",
   description:
     "Portfolio of Youssef Elsayed Abdelaziz — Third-Year Computer Science student at Misr International University specializing in Cybersecurity, Network Security, AI/ML, Linux & Cloud Infrastructure, and Full-Stack Software Engineering.",
@@ -43,7 +46,7 @@ export const metadata: Metadata = {
     description:
       "Building secure, scalable, and intelligent systems across Cybersecurity, AI/ML, Cloud/Linux Infrastructure, and Full-Stack Engineering.",
     type: "website",
-    url: "https://youssefelsayed.com",
+    url: SITE_URL,
     siteName: "Youssef Elsayed Portfolio",
     locale: "en_US",
     images: [
