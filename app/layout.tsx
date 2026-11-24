@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Youssef Elsayed | Software Engineer & Cybersecurity Specialist",
   description:
-    "Portfolio of Youssef Elsayed Abdelaziz — Third-Year Computer Science student at Misr International University specializing in Cybersecurity, Network Security, AI/ML, Linux & Cloud Infrastructure, and Full-Stack Software Engineering.",
+    "Portfolio of Youssef Elsayed Abdelaziz — Freshman Computer Science student at Misr International University specializing in Cybersecurity, Network Security, AI/ML, Linux & Cloud Infrastructure, and Full-Stack Software Engineering.",
   keywords: [
     "Youssef Elsayed",
     "Youssef Elsayed Abdelaziz",

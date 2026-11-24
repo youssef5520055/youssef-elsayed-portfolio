@@ -102,14 +102,14 @@ export const IDENTITY = {
   aboutHeading:
     "Computer Science student passionate about building secure and intelligent systems.",
   aboutParagraphs: [
-    "I'm a Third-Year Computer Science student at Misr International University, specializing in Cybersecurity and Network Security. I'm deeply passionate about Linux system administration, network security, secure software development, and the integration of machine learning into complex architectures.",
+    "I'm a Freshman Computer Science student at Misr International University, specializing in Cybersecurity and Network Security. I'm deeply passionate about Linux system administration, network security, secure software development, and the integration of machine learning into complex architectures.",
     "My engineering approach focuses on building resilient web applications, deploying secure Linux server infrastructures, and developing AI-based solutions — while bringing a graphic designer's eye for clarity and polish. I'm certified by Cisco, ISC2, AWS Academy, Red Hat, IBM, and Google, and I continuously apply modern security protocols to real-world software challenges.",
   ],
   education: {
     degree: "B.Sc. Computer Science",
     institution: "Misr International University",
-    standing: "Third Year · Cybersecurity Specialization",
-    period: "2023 – 2027",
+    standing: "Freshman · Cybersecurity Specialization",
+    period: "Present",
   },
   languages: [
     { name: "Arabic", level: "Native" },
@@ -555,8 +555,8 @@ export const EXPERIENCE_ITEMS: ExperienceItem[] = [
   {
     id: "miu-cs",
     type: "education",
-    period: "01/2023 – 02/2027",
-    title: "B.Sc. in Computer Science (Third Year)",
+    period: "Freshman · Present",
+    title: "B.Sc. in Computer Science (Freshman)",
     organization: "Misr International University (MIU)",
     location: "Cairo, Egypt",
     summary:
@@ -565,7 +565,7 @@ export const EXPERIENCE_ITEMS: ExperienceItem[] = [
       "Architected a 5,000+ user multi-building campus network topology with VLANs, OSPF, and redundancy",
       "Built full-stack university platforms (MIU QuickBit, PopStream) and multi-model ML churn pipelines",
     ],
-    tags: ["Cybersecurity Specialization", "Cisco Academy @ MIU", "Systems & AI", "Third Year"],
+    tags: ["Cybersecurity Specialization", "Cisco Academy @ MIU", "Systems & AI", "Freshman"],
   },
   {
     id: "self-directed-sec-cloud",
@@ -858,7 +858,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "availability",
     question: "What roles or collaborations are you currently open to?",
     answer:
-      "As a Third-Year Computer Science undergraduate (Class of 2027) based in Cairo, Egypt, I am open to cybersecurity/SOC internships, junior software engineering roles, Linux/cloud infrastructure projects, and selective freelance web engineering collaborations — remote or hybrid.",
+      "As a Freshman Computer Science undergraduate at Misr International University based in Cairo, Egypt, I am open to cybersecurity/SOC internships, junior software engineering roles, Linux/cloud infrastructure projects, and selective freelance web engineering collaborations — remote or hybrid.",
   },
   {
     id: "security-approach",
@@ -876,7 +876,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "reach-out",
     question: "What is the fastest way to get in touch?",
     answer:
-      "Use the pre-filled Email or WhatsApp links in the Contact Deck or Footer below, or connect directly on LinkedIn. You can also download my full Third-Year CV PDF in one click from the hero bar or About section.",
+      "Use the pre-filled Email or WhatsApp links in the Contact Deck or Footer below, or connect directly on LinkedIn. You can also download my full CV PDF in one click from the hero bar or About section.",
   },
 ]
 

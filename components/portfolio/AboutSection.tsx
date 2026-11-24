@@ -234,7 +234,7 @@ export default function AboutSection() {
                     {IDENTITY.education.institution}
                   </p>
                   <p className="font-mono text-[11px] text-[var(--text-muted)] tabular-nums">
-                    Third Year · {IDENTITY.education.period}
+                    {IDENTITY.education.standing}
                   </p>
                 </div>
               </div>
