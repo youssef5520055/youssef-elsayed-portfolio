@@ -2,11 +2,11 @@ const isDev = process.env.NODE_ENV === "development"
 
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  "img-src 'self' data: blob: https://assets.unicorn.studio https://storage.googleapis.com",
   "font-src 'self' data:",
-  "connect-src 'self'",
+  "connect-src 'self' https://storage.googleapis.com https://assets.unicorn.studio https://cdn.jsdelivr.net",
   "media-src 'none'",
   "frame-src 'self'",
   "object-src 'self'",

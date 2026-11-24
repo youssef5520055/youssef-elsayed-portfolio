@@ -10,30 +10,12 @@ import {
   ArrowRight,
   ArrowDown,
 } from "lucide-react"
-import EtchedAccretion, {
-  type AccretionParams,
-} from "@/components/ui/etched-accretion"
+import HeroAsciiOne from "@/components/ui/hero-ascii-one"
 import SlotText from "@/components/portfolio/SlotText"
 import { IDENTITY } from "@/lib/portfolio-data"
 import { ease } from "@/lib/motion"
 
 const CIPHER_CHARS = "0123456789abcdef/<>+-:*"
-
-const ACCRETION_PARAMS: Partial<AccretionParams> = {
-  diskColor: "#26D0A8",
-  streakColor: "#F0F4F2",
-  glowColor: "#148F77",
-  cloudColor: "#092B28",
-  background: "#06090B",
-  crimson: 0.0,
-  angle: -10,
-  inclination: 0.36,
-  center: [0.72, 0.5],
-  speed: 0.75,
-  grain: 0.65,
-  lensing: 1.15,
-  exposure: 1.1,
-}
 
 const QUICK_ACCESS_LINKS = [
   {
@@ -197,16 +179,11 @@ export default function HeroSection() {
   return (
     <div id="top" className="relative p-3 sm:p-5 lg:p-6 bg-[var(--bg-deep)]">
       <div className="relative rounded-2xl sm:rounded-[24px] overflow-hidden border border-[var(--border-subtle)] min-h-[calc(100svh-24px)] sm:min-h-[calc(100svh-40px)] lg:min-h-[calc(100svh-48px)] flex flex-col bg-[var(--bg-deep)] shadow-[0_24px_80px_rgba(0,0,0,0.6)]">
-        <EtchedAccretion
-          height="100%"
-          params={ACCRETION_PARAMS}
-          className="flex-1 justify-between"
-          aria-label="Hero introduction with interactive obsidian and glacial verdigris accretion singularity"
-        >
-          {/* Multi-layered readability scrim: protects left editorial copy without obscuring right singularity */}
+        <HeroAsciiOne className="flex-1 justify-between">
+          {/* Multi-layered readability scrim: protects left editorial copy without obscuring right ASCII figure */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#06090B]/88 via-[#06090B]/52 to-transparent"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#06090B]/88 via-[#06090B]/45 to-transparent"
           />
           <div
             aria-hidden="true"
@@ -371,7 +348,7 @@ export default function HeroSection() {
               </div>
             </motion.div>
           </div>
-        </EtchedAccretion>
+        </HeroAsciiOne>
       </div>
     </div>
   )
